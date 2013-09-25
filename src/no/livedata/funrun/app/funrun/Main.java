@@ -41,7 +41,6 @@ public class Main extends Activity {
 				} else {
 				    StartButton.setText("Start");//husk å sette string
 				    LapButton.setText("Reset");//husk å sette string
-				    LapButton.setEnabled(true);
 				    v.setTag(1); //pause
 				} 
 			}
