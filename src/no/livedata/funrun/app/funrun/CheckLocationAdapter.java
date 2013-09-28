@@ -1,8 +1,6 @@
 package no.livedata.funrun.app.funrun;
  
 import java.util.ArrayList;
-
-import no.livedata.ola.app.sendmylocation.library.Pos;
  
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class CheckLocationAdapter extends BaseAdapter {
  
     private Activity activity; // the activity to use it in
-    private ArrayList<Pos> data; // the data to display
+    private ArrayList data; // the data to display
     private static LayoutInflater inflater=null; // layoutInflater to save inflated layout
     
     /*
@@ -30,7 +28,7 @@ public class CheckLocationAdapter extends BaseAdapter {
      * @param Activity a the activity to use it in
      * @param ArrayList<Pos> d the data to put in adapter
      */
-    public CheckLocationAdapter(Activity a, ArrayList<Pos> d) {
+    public CheckLocationAdapter(Activity a, ArrayList d) {
         activity = a; // set activity
         data=d; // set data
         // inflate into the activity
@@ -66,7 +64,7 @@ public class CheckLocationAdapter extends BaseAdapter {
      * replace the data in the adapter
      * @param ArrayList<Pos> d the data to use
      */
-    public void setData(ArrayList<Pos> d) {
+    public void setData(ArrayList d) {
     	data = d; // set data to the passed data
     }
     
@@ -76,7 +74,7 @@ public class CheckLocationAdapter extends BaseAdapter {
      */
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView; // get the view
-        if(convertView==null) // inflate it if its not set
+        /*if(convertView==null) // inflate it if its not set
             vi = inflater.inflate(R.layout.list_checklocation, null);
         
         // get ui elements
@@ -88,6 +86,7 @@ public class CheckLocationAdapter extends BaseAdapter {
         // Set latlng to latitude and longitude
         latlng.setText(laln.latitude + ", " + laln.longitude);
         time.setText(res.getTime()); // set the time field
+        */
         return vi;
     }
 }

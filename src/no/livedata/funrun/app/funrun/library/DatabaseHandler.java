@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
-import no.livedata.ola.app.sendmylocation.library.Pos;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
@@ -106,7 +104,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Getting all positions
      * @return ArrayList<Pos> list of pos-objects from db
      */
-    public ArrayList<Pos> getPos(){
+    /*public ArrayList<Pos> getPos(){
     	ArrayList<Pos> output = new ArrayList<Pos>(); // the return array
         
         String selectQuery = "SELECT * FROM " + TABLE_POS; // select all rows from Postable
@@ -134,5 +132,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         
         return output; // return the array of all data
-    }
+    }*/
 }
