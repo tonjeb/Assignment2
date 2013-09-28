@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -98,16 +99,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
-	// Eksempel på uthenting fra database
-	/*
-	 * getPos
-     * Getting all positions
-     * @return ArrayList<Pos> list of pos-objects from db
-     */
-    /*public ArrayList<Pos> getPos(){
-    	ArrayList<Pos> output = new ArrayList<Pos>(); // the return array
+
+
+    public ArrayList<Lap> getLap(int id){
+    	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
-        String selectQuery = "SELECT * FROM " + TABLE_POS; // select all rows from Postable
+        String selectQuery = "SELECT * FROM " + TABLE_LAP + " WHERE LAP_KEY_ID=" + id; //HUSK sjekk om den eksistrer
       
         // getredable db
         SQLiteDatabase db = this.getReadableDatabase();
@@ -116,12 +113,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) { // if table has rows
             do {
-            	// insert new pos-object to return array
             	output.add(
-            		new Pos(	
-            			Double.parseDouble(cursor.getString(cursor.getColumnIndex(KEY_LAT))),
-            			Double.parseDouble(cursor.getString(cursor.getColumnIndex(KEY_LNG))),
-            			cursor.getString(cursor.getColumnIndex(KEY_TIME))
+            		new Lap(	
+            			(cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID))),
+            			cursor.getString(cursor.getColumnIndex(LAP_KEY_TIME)),
+            			cursor.getString(cursor.getColumnIndex(LAP_KEY_ACT))
             		)
             	);
             } while (cursor.moveToNext()); // move cursor to next row
@@ -132,5 +128,100 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         
         return output; // return the array of all data
-    }*/
+    }
+
+
+//Set 
+    public ArrayList<Lap> setLap(){
+    	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
+        
+        String selectQuery = "SELECT * FROM " + TABLE_LAP; // select all rows from Postable
+      
+        // getredable db
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null); // cursor to go through db
+      
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) { // if table has rows
+            do {
+            	output.add(
+            		new Lap(	
+            			(cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID))),
+            			cursor.getString(cursor.getColumnIndex(LAP_KEY_TIME)),
+            			cursor.getString(cursor.getColumnIndex(LAP_KEY_ACT))
+            		)
+            	);
+            } while (cursor.moveToNext()); // move cursor to next row
+        }
+        
+        // close cursor and db connections
+        cursor.close();
+        db.close();
+        
+        return output; // return the array of all data
+    }
+
+
+public ArrayList<Activity> getActivity(int id){
+	ArrayList<Activity> output = new ArrayList<Activity>(); // the return array
+    
+    String selectQuery = "SELECT * FROM " + TABLE_ACT + " WHERE ACT_KEY_ID=" + id; // HUSK sjekk om den eksisterer
+  
+    // getredable db
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // cursor to go through db
+  
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) { // if table has rows
+        do {
+        	output.add(
+        		new Activity(	
+        			(cursor.getInt(cursor.getColumnIndex(ACT_KEY_ID))),
+        			cursor.getString(cursor.getColumnIndex(ACT_KEY_TIME)),
+        			cursor.getString(cursor.getColumnIndex(ACT_KEY_START))
+        		)
+        	);
+        } while (cursor.moveToNext()); // move cursor to next row
+    }
+    
+    // close cursor and db connections
+    cursor.close();
+    db.close();
+    
+    return output; // return the array of all data
 }
+
+
+public ArrayList<Logg> getLog(int id){
+	ArrayList<Logg> output = new ArrayList<Logg>(); // the return array
+    
+    String selectQuery = "SELECT * FROM " + TABLE_LOG + " WHERE LOG_KEY_ID=" + id; //HUSK sjekk om den eksisterer
+  
+    // getredable db
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // cursor to go through db
+  
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) { // if table has rows
+        do {
+        	output.add(
+        		new Logg(	
+        			(cursor.getInt(cursor.getColumnIndex(LOG_KEY_ID))),
+        			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LAT)),
+        			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LON)),
+        			cursor.getString(cursor.getColumnIndex(LOG_KEY_TIME)),
+        			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_ALT)),
+        			cursor.getInt(cursor.getColumnIndex(LOG_KEY_ACT))
+        		)
+        	);
+        } while (cursor.moveToNext()); // move cursor to next row
+    }
+    
+    // close cursor and db connections
+    cursor.close();
+    db.close();
+    
+    return output; // return the array of all data
+}
+}
+
