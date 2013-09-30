@@ -63,7 +63,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Creating Tables
-	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_ACT_TABLE = "CREATE TABLE " + TABLE_ACT + "("
 				+ ACT_KEY_ID + " INTEGER PRIMARY KEY," 
@@ -88,7 +87,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Upgrading database
-	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Drop older table if existed
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACT);
@@ -131,35 +129,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-//Set 
-    public ArrayList<Lap> setLap(){
-    	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
-        
-        String selectQuery = "SELECT * FROM " + TABLE_LAP; // select all rows from Postable
-      
-        // getredable db
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null); // cursor to go through db
-      
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) { // if table has rows
-            do {
-            	output.add(
-            		new Lap(	
-            			(cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID))),
-            			cursor.getString(cursor.getColumnIndex(LAP_KEY_TIME)),
-            			cursor.getString(cursor.getColumnIndex(LAP_KEY_ACT))
-            		)
-            	);
-            } while (cursor.moveToNext()); // move cursor to next row
-        }
-        
-        // close cursor and db connections
-        cursor.close();
-        db.close();
-        
-        return output; // return the array of all data
-    }
+//Set lap
 
 
 public ArrayList<Activity> getActivity(int id){
@@ -191,6 +161,8 @@ public ArrayList<Activity> getActivity(int id){
     return output; // return the array of all data
 }
 
+//Set activity
+
 
 public ArrayList<Logg> getLog(int id){
 	ArrayList<Logg> output = new ArrayList<Logg>(); // the return array
@@ -217,11 +189,14 @@ public ArrayList<Logg> getLog(int id){
         } while (cursor.moveToNext()); // move cursor to next row
     }
     
-    // close cursor and db connections
-    cursor.close();
-    db.close();
+    	// close cursor and db connections
+    	cursor.close();
+    	db.close();
     
-    return output; // return the array of all data
-}
+    	return output; // return the array of all data
+	}
+
+//Set log
+
 }
 
