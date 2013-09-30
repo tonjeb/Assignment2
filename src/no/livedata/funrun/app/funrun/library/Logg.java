@@ -17,7 +17,7 @@ package no.livedata.funrun.app.funrun.library;
 		logKeyAlt = 0.0;
 		logKeyAct = 0;
 	}
-					
+	
 	Logg(int id, double lat, double lon, String time, double alt, int act) {
 		logKeyId = id;
 		logKeyLat = lat;
