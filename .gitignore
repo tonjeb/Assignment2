@@ -3,4 +3,8 @@ gen/
 .project
 .classpath
 .settings/
+<<<<<<< HEAD
 project.propertiess
+=======
+project.properties
+>>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
