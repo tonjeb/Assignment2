@@ -1,25 +1,11 @@
 package no.livedata.funrun.app.funrun.library;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.concurrent.TimeUnit;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Element;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -97,8 +83,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
+	public void insertLap(Lap newLap) {
+		int id = newLap.getLapKeyId();
+		String time = newLap.getLapKeyTime();
+		int act = newLap.getLapKeyAct();
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues insert = new ContentValues(); 
+		insert.put(LAP_KEY_ID, id);
+		insert.put(LAP_KEY_TIME, time);
+		insert.put(LAP_KEY_ACT, act);
 
+		// Prepared statement + sqlite 
+		db.insert("LAP", null, insert);
+		db.close();
+	}	
+	
+	public void insertActivity(Activity newActivity) {
+		int id = newActivity.getActKeyId();
+		String time = newActivity.getActKeyTime();
+		String start = newActivity.getActKeyStart();
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues insert = new ContentValues(); 
+		insert.put(ACT_KEY_ID, id);
+		insert.put(ACT_KEY_TIME, time);
+		insert.put(ACT_KEY_START, start);
 
+		// Prepared statement + sqlite 
+		db.insert("ACT", null, insert);
+		db.close();	
+	}	
+	
+	public void insertLogg(Logg newLogg) {
+		int id = newLogg.getLogKeyId();
+		double lat = newLogg.getLogKeyLat();
+		double lon = newLogg.getLogKeyLon();
+		String time = newLogg.getLogKeyTime();
+		double alt = newLogg.getLogKeyAlt();
+		int act = newLogg.getLogKeyAct();
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues insert = new ContentValues(); 
+		insert.put(LOG_KEY_ID, id);
+		insert.put(LOG_KEY_LAT, lat);
+		insert.put(LOG_KEY_LON, lon);
+		insert.put(LOG_KEY_TIME, time);
+		insert.put(LOG_KEY_ALT, alt);
+		insert.put(LOG_KEY_ACT, act);
+
+		// Prepared statement + sqlite 
+		db.insert("LOG", null, insert);
+		db.close();	
+	}	
+	
     public ArrayList<Lap> getLap(int id){
     	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
@@ -129,9 +167,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-//Set lap
-
-
 public ArrayList<Activity> getActivity(int id){
 	ArrayList<Activity> output = new ArrayList<Activity>(); // the return array
     
@@ -160,8 +195,6 @@ public ArrayList<Activity> getActivity(int id){
     
     return output; // return the array of all data
 }
-
-//Set activity
 
 
 public ArrayList<Logg> getLog(int id){
@@ -196,7 +229,6 @@ public ArrayList<Logg> getLog(int id){
     	return output; // return the array of all data
 	}
 
-//Set log
 
 }
 

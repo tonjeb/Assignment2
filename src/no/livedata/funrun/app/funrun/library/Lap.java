@@ -13,6 +13,30 @@ public class Lap {
 		
 	}
 	
+	public int getLapKeyId() {
+		return lapKeyId;
+	}
+
+	public void setLapKeyId(int lapKeyId) {
+		this.lapKeyId = lapKeyId;
+	}
+
+	public String getLapKeyTime() {
+		return lapKeyTime;
+	}
+
+	public void setLapKeyTime(String lapKeyTime) {
+		this.lapKeyTime = lapKeyTime;
+	}
+
+	public int getLapKeyAct() {
+		return lapKeyAct;
+	}
+
+	public void setLapKeyAct(int lapKeyAct) {
+		this.lapKeyAct = lapKeyAct;
+	}
+
 	Lap(int id, String time, String act) {
 		int lapKeyId = id;
 		String lapKeyTime = time;
