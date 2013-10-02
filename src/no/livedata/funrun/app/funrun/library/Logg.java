@@ -1,79 +1,130 @@
 package no.livedata.funrun.app.funrun.library;
 
-	public class Logg {
-		
-		int logKeyId;
-		double logKeyLat;
-		double logKeyLon;
-		String logKeyTime;
-		double logKeyAlt;
-		int logKeyAct;
-		
-		public int getLogKeyId() {
-			return logKeyId;
-		}
-
-		public void setLogKeyId(int logKeyId) {
-			this.logKeyId = logKeyId;
-		}
-
-		public double getLogKeyLat() {
-			return logKeyLat;
-		}
-
-		public void setLogKeyLat(double logKeyLat) {
-			this.logKeyLat = logKeyLat;
-		}
-
-		public double getLogKeyLon() {
-			return logKeyLon;
-		}
-
-		public void setLogKeyLon(double logKeyLon) {
-			this.logKeyLon = logKeyLon;
-		}
-
-		public String getLogKeyTime() {
-			return logKeyTime;
-		}
-
-		public void setLogKeyTime(String logKeyTime) {
-			this.logKeyTime = logKeyTime;
-		}
-
-		public double getLogKeyAlt() {
-			return logKeyAlt;
-		}
-
-		public void setLogKeyAlt(double logKeyAlt) {
-			this.logKeyAlt = logKeyAlt;
-		}
-
-		public int getLogKeyAct() {
-			return logKeyAct;
-		}
-
-		public void setLogKeyAct(int logKeyAct) {
-			this.logKeyAct = logKeyAct;
-		}
-
-		Logg() {
-			logKeyId = 0;
-			logKeyLat = 0.0;
-			logKeyLon = 0.0;
-			logKeyTime = "";
-		logKeyAlt = 0.0;
-		logKeyAct = 0;
+public class Logg {
+	
+	int id;
+	double lat;
+	double lon;
+	int time;
+	double alt;
+	double speed;
+	int act;
+	
+	public Logg() {
+		id = 0;
+		lat = 0.0;
+		lon = 0.0;
+		time = 0;
+		alt = 0.0;
+		speed = 0.0;
+		act = 0;
 	}
 	
-	Logg(int id, double lat, double lon, String time, double alt, int act) {
-		logKeyId = id;
-		logKeyLat = lat;
-		logKeyLon = lon;
-		logKeyTime = time;
-		logKeyAlt = alt;
-		logKeyAct = act;
+	public Logg(int id, double lat, double lon, int time, double alt, double speed, int act) {
+		this.id = id;
+		this.lat = lat;
+		this.lon = lon;
+		this.time = time;
+		this.alt = alt;
+		this.speed = speed;
+		this.act = act;
 	}
-		
 
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	/**
+	 * @return the lat
+	 */
+	public double getLat() {
+		return lat;
+	}
+
+	/**
+	 * @param lat the lat to set
+	 */
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	/**
+	 * @return the lon
+	 */
+	public double getLon() {
+		return lon;
+	}
+
+	/**
+	 * @param lon the lon to set
+	 */
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public int getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	/**
+	 * @return the alt
+	 */
+	public double getAlt() {
+		return alt;
+	}
+
+	/**
+	 * @param alt the alt to set
+	 */
+	public void setAlt(double alt) {
+		this.alt = alt;
+	}
+
+	/**
+	 * @return the speed
+	 */
+	public double getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * @return the act
+	 */
+	public int getAct() {
+		return act;
+	}
+
+	/**
+	 * @param act the act to set
+	 */
+	public void setAct(int act) {
+		this.act = act;
+	}
 }

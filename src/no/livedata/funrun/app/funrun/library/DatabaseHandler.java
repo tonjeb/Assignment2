@@ -1,6 +1,9 @@
 package no.livedata.funrun.app.funrun.library;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,6 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Act Table Columns names
 	private static final String ACT_KEY_ID = "id";
 	private static final String ACT_KEY_START = "start";
+	private static final String ACT_KEY_DIST = "dist";
 	private static final String ACT_KEY_TIME = "time";
 	
 	// Lap table name
@@ -30,6 +34,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Lap Table Columns names
 	public static final String LAP_KEY_ID = "id";
 	public static final String LAP_KEY_TIME = "time";
+	public static final String LAP_KEY_DIST = "dist";
 	public static final String LAP_KEY_ACT = "act";
 	
 	// Log table name
@@ -41,6 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String LOG_KEY_LON = "lon";
 	private static final String LOG_KEY_TIME = "time";
 	private static final String LOG_KEY_ALT = "alt";
+	private static final String LOG_KEY_SPEED = "speed";
 	private static final String LOG_KEY_ACT = "act";
 	
 
@@ -52,13 +58,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_ACT_TABLE = "CREATE TABLE " + TABLE_ACT + "("
 				+ ACT_KEY_ID + " INTEGER PRIMARY KEY," 
-				+ ACT_KEY_START + " TEXT,"
-				+ ACT_KEY_TIME + " TEXT" + ")";
+				+ ACT_KEY_START + " INTEGER,"
+				+ ACT_KEY_DIST + " INTEGER,"
+				+ ACT_KEY_TIME + " INTEGER" + ")";
 		db.execSQL(CREATE_ACT_TABLE);
 		
 		String CREATE_LAP_TABLE = "CREATE TABLE " + TABLE_LAP + "("
 				+ LAP_KEY_ID + " INTEGER PRIMARY KEY,"
-				+ LAP_KEY_TIME + " TEXT,"
+				+ LAP_KEY_TIME + " INTEGER,"
+				+ LAP_KEY_DIST + " INTEGER,"
 				+ LAP_KEY_ACT + " INTEGER" + ")";
 		db.execSQL(CREATE_LAP_TABLE);
 		
@@ -66,8 +74,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ LOG_KEY_ID + " INTEGER PRIMARY KEY," 
 				+ LOG_KEY_LAT + " REAL,"
 				+ LOG_KEY_LON + " REAL,"
-				+ LOG_KEY_TIME + " TEXT,"
+				+ LOG_KEY_TIME + " INTEGER,"
 				+ LOG_KEY_ALT + " REAL,"
+				+ LOG_KEY_SPEED + " REAL,"
 				+ LOG_KEY_ACT + " INTEGER" + ")";
 		db.execSQL(CREATE_LOG_TABLE);
 	}
@@ -84,63 +93,76 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	public void insertLap(Lap newLap) {
-		int id = newLap.getLapKeyId();
-		String time = newLap.getLapKeyTime();
-		int act = newLap.getLapKeyAct();
+		int time = newLap.getTime();
+		double dist = newLap.getDist();
+		int act = newLap.getAct();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues insert = new ContentValues(); 
-		insert.put(LAP_KEY_ID, id);
 		insert.put(LAP_KEY_TIME, time);
+		insert.put(LAP_KEY_DIST, dist);
 		insert.put(LAP_KEY_ACT, act);
 
 		// Prepared statement + sqlite 
-		db.insert("LAP", null, insert);
+		db.insert(TABLE_LAP, null, insert);
+		
 		db.close();
 	}	
 	
-	public void insertActivity(Activity newActivity) {
-		int id = newActivity.getActKeyId();
-		String time = newActivity.getActKeyTime();
-		String start = newActivity.getActKeyStart();
+	public int insertActivity(Act newActivity) {
+		int time = newActivity.getTime();
+		int start = newActivity.getStart();
+		double dist = newActivity.getDist();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues insert = new ContentValues(); 
-		insert.put(ACT_KEY_ID, id);
 		insert.put(ACT_KEY_TIME, time);
 		insert.put(ACT_KEY_START, start);
+		insert.put(ACT_KEY_DIST, dist);
 
 		// Prepared statement + sqlite 
-		db.insert("ACT", null, insert);
-		db.close();	
+		int insId = (int) db.insert(TABLE_ACT, null, insert);
+		db.close();
+		
+		return insId;
 	}	
 	
 	public void insertLogg(Logg newLogg) {
-		int id = newLogg.getLogKeyId();
-		double lat = newLogg.getLogKeyLat();
-		double lon = newLogg.getLogKeyLon();
-		String time = newLogg.getLogKeyTime();
-		double alt = newLogg.getLogKeyAlt();
-		int act = newLogg.getLogKeyAct();
+		double lat = newLogg.getLat();
+		double lon = newLogg.getLon();
+		int time = newLogg.getTime();
+		double alt = newLogg.getAlt();
+		double speed = newLogg.getSpeed();
+		int act = newLogg.getAct();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues insert = new ContentValues(); 
-		insert.put(LOG_KEY_ID, id);
 		insert.put(LOG_KEY_LAT, lat);
 		insert.put(LOG_KEY_LON, lon);
 		insert.put(LOG_KEY_TIME, time);
 		insert.put(LOG_KEY_ALT, alt);
+		insert.put(LOG_KEY_SPEED, speed);
 		insert.put(LOG_KEY_ACT, act);
 
 		// Prepared statement + sqlite 
-		db.insert("LOG", null, insert);
+		db.insert(TABLE_LOG, null, insert);
 		db.close();	
 	}	
 	
-    public ArrayList<Lap> getLap(int id){
+	public void updateActivity(int id, int time, int dist) {	
+		SQLiteDatabase db = this.getWritableDatabase();
+		String strFilter = ACT_KEY_ID + "=" + id;
+		ContentValues args = new ContentValues();
+		args.put(ACT_KEY_TIME, time);
+		args.put(ACT_KEY_DIST, dist);
+		db.update(TABLE_ACT, args, strFilter, null);
+		db.close();
+	}
+	
+    public ArrayList<Lap> getLaps(int id){
     	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
-        String selectQuery = "SELECT * FROM " + TABLE_LAP + " WHERE LAP_KEY_ID=" + id; //HUSK sjekk om den eksistrer
+        String selectQuery = "SELECT * FROM " + TABLE_LAP + " WHERE LAP_KEY_ACT=" + id; 
       
         // getredable db
         SQLiteDatabase db = this.getReadableDatabase();
@@ -151,9 +173,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
             	output.add(
             		new Lap(	
-            			(cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID))),
-            			cursor.getString(cursor.getColumnIndex(LAP_KEY_TIME)),
-            			cursor.getString(cursor.getColumnIndex(LAP_KEY_ACT))
+            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID)),
+            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_TIME)),
+            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_DIST)),
+            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ACT))
             		)
             	);
             } while (cursor.moveToNext()); // move cursor to next row
@@ -167,10 +190,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-public ArrayList<Activity> getActivity(int id){
-	ArrayList<Activity> output = new ArrayList<Activity>(); // the return array
+public ArrayList<Act> getActivitys(int id){
+	ArrayList<Act> output = new ArrayList<Act>(); // the return array
     
-    String selectQuery = "SELECT * FROM " + TABLE_ACT + " WHERE ACT_KEY_ID=" + id; // HUSK sjekk om den eksisterer
+    String selectQuery = "SELECT * FROM " + TABLE_ACT + " WHERE ACT_KEY_ID=" + id;
   
     // getredable db
     SQLiteDatabase db = this.getReadableDatabase();
@@ -180,10 +203,11 @@ public ArrayList<Activity> getActivity(int id){
     if (cursor.moveToFirst()) { // if table has rows
         do {
         	output.add(
-        		new Activity(	
-        			(cursor.getInt(cursor.getColumnIndex(ACT_KEY_ID))),
-        			cursor.getString(cursor.getColumnIndex(ACT_KEY_TIME)),
-        			cursor.getString(cursor.getColumnIndex(ACT_KEY_START))
+        		new Act(	
+        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_ID)),
+        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_TIME)),
+        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_START)),
+        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_DIST))
         		)
         	);
         } while (cursor.moveToNext()); // move cursor to next row
@@ -200,8 +224,8 @@ public ArrayList<Activity> getActivity(int id){
 public ArrayList<Logg> getLog(int id){
 	ArrayList<Logg> output = new ArrayList<Logg>(); // the return array
     
-    String selectQuery = "SELECT * FROM " + TABLE_LOG + " WHERE LOG_KEY_ID=" + id; //HUSK sjekk om den eksisterer
-  
+    String selectQuery = "SELECT * FROM " + TABLE_LOG + " WHERE LOG_KEY_ACT=" + id;
+    
     // getredable db
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.rawQuery(selectQuery, null); // cursor to go through db
@@ -214,8 +238,9 @@ public ArrayList<Logg> getLog(int id){
         			(cursor.getInt(cursor.getColumnIndex(LOG_KEY_ID))),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LAT)),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LON)),
-        			cursor.getString(cursor.getColumnIndex(LOG_KEY_TIME)),
+        			cursor.getInt(cursor.getColumnIndex(LOG_KEY_TIME)),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_ALT)),
+        			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_SPEED)),
         			cursor.getInt(cursor.getColumnIndex(LOG_KEY_ACT))
         		)
         	);

@@ -1,5 +1,6 @@
 package no.livedata.funrun.app.funrun.library;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 import android.view.LayoutInflater;
@@ -36,6 +37,9 @@ public class ActivityAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return null;
 	}
+=======
+public class ActivityAdapter extends Act {
+>>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
  
     
 }

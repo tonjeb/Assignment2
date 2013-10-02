@@ -1,5 +1,7 @@
 package no.livedata.funrun.app.funrun;
 
+import no.livedata.funrun.app.funrun.library.DatabaseHandler;
+import no.livedata.funrun.app.funrun.library.Logg;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -123,12 +125,25 @@ public class LoggerService extends Service implements LocationListener {
 	    lastLon=location.getLongitude();
 	    
 	    Log.d("GPS","Distance: " + (double)distance/1000);
-		// DB connection here
+	    
+	    // connect to db
+ 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+ 		db.insertLogg(new Logg (
+ 							0,
+ 							location.getLatitude(),
+ 							location.getLongitude(),
+ 							(int)System.currentTimeMillis()/1000,
+ 							location.getAltitude(),
+ 							location.getSpeed(),
+ 							activity
+ 						));
+ 		db.close();
 	    
 	    // notify ui about change
 	    Intent intent = new Intent();
 	    intent.setAction(UPDATE_UI);
 	    intent.putExtra("DIST", distance);
+	    intent.putExtra("SPEED", location.getSpeed());
 	    sendBroadcast(intent);
 	}
 
