@@ -1,26 +1,38 @@
 package no.livedata.funrun.app.funrun.library;
 
-public class Lap {
+public class Act {
 	
+	int start;
 	int id;
 	int time;
 	int dist;
-	int act;
-	
-	
-	public Lap() {
+
+	public Act() {
 		id = 0;
+		start = 0;
 		time = 0;
 		dist = 0;
-		act = 0;
-		
 	}
 	
-	public Lap(int id, int time, int dist, int act) {
+	public Act(int id, int start, int time, int dist) {
 		this.id = id;
+		this.start = start;
 		this.time = time;
 		this.dist = dist;
-		this.act = act;
+	}
+
+	/**
+	 * @return the start
+	 */
+	public int getStart() {
+		return start;
+	}
+
+	/**
+	 * @param start the start to set
+	 */
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	/**
@@ -64,19 +76,5 @@ public class Lap {
 	public void setDist(int dist) {
 		this.dist = dist;
 	}
-
-	/**
-	 * @return the act
-	 */
-	public int getAct() {
-		return act;
-	}
-
-	/**
-	 * @param act the act to set
-	 */
-	public void setAct(int act) {
-		this.act = act;
-	}	
-
+	
 }

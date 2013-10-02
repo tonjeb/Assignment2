@@ -144,6 +144,7 @@ public class LoggerService extends Service implements LocationListener {
 	    Intent intent = new Intent();
 	    intent.setAction(UPDATE_UI);
 	    intent.putExtra("DIST", distance);
+	    intent.putExtra("SPEED", location.getSpeed());
 	    sendBroadcast(intent);
 	}
 

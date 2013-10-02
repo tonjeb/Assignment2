@@ -1,6 +1,9 @@
 package no.livedata.funrun.app.funrun.library;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -106,7 +109,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}	
 	
-	public int insertActivity(Activity newActivity) {
+	public int insertActivity(Act newActivity) {
 		int time = newActivity.getTime();
 		int start = newActivity.getStart();
 		double dist = newActivity.getDist();
@@ -146,6 +149,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();	
 	}	
 	
+	public void updateActivity(int id, int time, int dist) {	
+		SQLiteDatabase db = this.getWritableDatabase();
+		String strFilter = ACT_KEY_ID + "=" + id;
+		ContentValues args = new ContentValues();
+		args.put(ACT_KEY_TIME, time);
+		args.put(ACT_KEY_DIST, dist);
+		db.update(TABLE_ACT, args, strFilter, null);
+		db.close();
+	}
+	
     public ArrayList<Lap> getLaps(int id){
     	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
@@ -162,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             		new Lap(	
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_TIME)),
-            			cursor.getDouble(cursor.getColumnIndex(LAP_KEY_DIST)),
+            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_DIST)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ACT))
             		)
             	);
@@ -177,8 +190,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-public ArrayList<Activity> getActivitys(int id){
-	ArrayList<Activity> output = new ArrayList<Activity>(); // the return array
+public ArrayList<Act> getActivitys(int id){
+	ArrayList<Act> output = new ArrayList<Act>(); // the return array
     
     String selectQuery = "SELECT * FROM " + TABLE_ACT + " WHERE ACT_KEY_ID=" + id;
   
@@ -190,11 +203,11 @@ public ArrayList<Activity> getActivitys(int id){
     if (cursor.moveToFirst()) { // if table has rows
         do {
         	output.add(
-        		new Activity(	
+        		new Act(	
         			cursor.getInt(cursor.getColumnIndex(ACT_KEY_ID)),
         			cursor.getInt(cursor.getColumnIndex(ACT_KEY_TIME)),
         			cursor.getInt(cursor.getColumnIndex(ACT_KEY_START)),
-        			cursor.getDouble(cursor.getColumnIndex(ACT_KEY_DIST))
+        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_DIST))
         		)
         	);
         } while (cursor.moveToNext()); // move cursor to next row
