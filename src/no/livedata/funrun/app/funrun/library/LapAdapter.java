@@ -36,13 +36,11 @@ public class LapAdapter {
 	        // get ui elements
 	       TextView time = (TextView)vi.findViewById(R.id.time);
 	       TextView dist = (TextView)vi.findViewById(R.id.dist);
-	       TextView act = (TextView)vi.findViewById(R.id.act);
 	 
 	        Lap res = data.get(position); // get Laps object for position
 	        //LatLng laln = res.getLatLng(); // get LatLng from Pos object
 	        time.setText(res.getTime()); // set the time field
-	        dist.setText(res.getDist()); // set the field dist
-	        act.setText(res.getAct());
+	        dist.setText(res.getDist()); // set the field dists
 	        
 	        
 			return vi;

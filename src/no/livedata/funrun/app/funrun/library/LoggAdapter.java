@@ -39,7 +39,6 @@ public class LoggAdapter extends BaseAdapter {
     TextView lon = (TextView)vi.findViewById(R.id.lon);
     TextView alt = (TextView)vi.findViewById(R.id.alt);
     TextView speed = (TextView)vi.findViewById(R.id.speed);
-    TextView act = (TextView)vi.findViewById(R.id.act);
 
      Logg res = data.get(position); // get Laps object for position
      //LatLng laln = res.getLatLng(); // get LatLng from Pos object
