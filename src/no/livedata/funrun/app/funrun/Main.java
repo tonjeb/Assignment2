@@ -70,11 +70,10 @@ public class Main extends Activity {
 		timeView = (TextView) findViewById(R.id.TimeView);
 		distView = (TextView) findViewById(R.id.DistView);
 		lapView = (TextView) findViewById(R.id.LapView);
-	
-		StartButton.setTag(1);
-		StartButton.setText(getResources().getString(R.string.start));
-		StartButton.setOnClickListener( new View.OnClickListener() {
+		
 		startButton.setTag(1);
+		startButton.setText(getResources().getString(R.string.start));
+		startButton.setOnClickListener( new View.OnClickListener() {
 	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
@@ -87,18 +86,18 @@ public class Main extends Activity {
 					
 				    //take the time
 
-					LapButton.setText(getResources().getString(R.string.lap));
-					LapButton.setEnabled(true);
-				    StartButton.setText(getResources().getString(R.string.stop));
-s
+					lapButton.setText(getResources().getString(R.string.lap));
+					lapButton.setEnabled(true);
+				    startButton.setText(getResources().getString(R.string.stop));
 				    v.setTag(0); //pause
+
 				} else { // STOP
 					stopTime();
 					stopService(serviceIntent);
 					
 
-				    StartButton.setText(getResources().getString(R.string.start));
-				    LapButton.setText(getResources().getString(R.string.reset));
+				    startButton.setText(getResources().getString(R.string.start));
+				    lapButton.setText(getResources().getString(R.string.reset));
 
 				    v.setTag(1); //pause
 				} 
@@ -106,10 +105,10 @@ s
 		});
 		
 
-		LapButton.setTag(1);
-		LapButton.setText(getResources().getString(R.string.lap));
-		LapButton.setEnabled(false);
-		LapButton.setOnClickListener(new View.OnClickListener() {
+		lapButton.setTag(1);
+		lapButton.setText(getResources().getString(R.string.lap));
+		lapButton.setEnabled(false);
+		lapButton.setOnClickListener(new View.OnClickListener() {
 	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
