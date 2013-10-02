@@ -2,11 +2,13 @@ package no.livedata.funrun.app.funrun.library;
 
 import java.util.ArrayList;
 
+import android.R;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class ActivityAdapter extends BaseAdapter {
 	
@@ -14,27 +16,34 @@ public class ActivityAdapter extends BaseAdapter {
     private ArrayList<Act> data; 
     private static LayoutInflater inflater=null; 
 
-	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	      return data.size(); // return count of data
 	}
 
-	@Override
-	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub 
-		return null;
+	public Object getItem(int position) {
+		return position;
 	}
-
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
+	
+    public long getItemId(int position) {
+        return position;
+    }
+	
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
+		 View vi=convertView; // get the view
+	        if(convertView==null) // inflate it if its not set
+	            vi = inflater.inflate(R.layout.list_checklocation, null);
+	        
+	        // get ui elements
+	       TextView time = (TextView)vi.findViewById(R.id.time);
+	       TextView dist = (TextView)vi.findViewById(R.id.dist);
+	       TextView start = (TextView)vi.findViewById(R.id.start);
+	 
+	        Act res = data.get(position); // get Laps object for position
+	        //LatLng laln = res.getLatLng(); // get LatLng from Pos object
+	        time.setText(res.getTime()); // set the time field
+	        dist.setText(res.getDist()); // set the field dist
+	        start.setText(res.getStart());
+	        
+		return vi;
 	}
 }
