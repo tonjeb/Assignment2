@@ -38,6 +38,12 @@ public class Main extends Activity {
 	TextView distView;
 	TextView lapView;
 	
+	// Menu
+	Button mBtnMap;
+	Button mBtnLap;
+	Button mBtnHome;
+	Button mBtnHist;
+	
 	// Timer
 	Handler mHandler = new Handler();
 	long startTime;
@@ -66,10 +72,23 @@ public class Main extends Activity {
 		
 		startButton = (Button) findViewById(R.id.StartButton);
 		lapButton = (Button) findViewById(R.id.LapButton);
-		
 		timeView = (TextView) findViewById(R.id.TimeView);
 		distView = (TextView) findViewById(R.id.DistView);
 		lapView = (TextView) findViewById(R.id.LapView);
+		
+		// menu
+		mBtnMap = (Button) findViewById(R.id.mBtnMap);
+		mBtnLap = (Button) findViewById(R.id.mBtnLap);
+		mBtnHome = (Button) findViewById(R.id.mBtnHome);
+		mBtnHist = (Button) findViewById(R.id.mBtnHist);
+		
+		mBtnMap.setOnClickListener( new View.OnClickListener() {
+			public void onClick (View v) {
+				Intent mapInt = new Intent(getApplicationContext(), Map.class); 
+	        	mapInt.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        	startActivity(mapInt); // start the activity
+			}
+		});
 		
 		startButton.setTag(1);
 		startButton.setText(getResources().getString(R.string.start));
@@ -169,7 +188,7 @@ public class Main extends Activity {
 	 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 	 		activity = db.insertActivity(new Act(
 	 							0,
-	 							(int)System.currentTimeMillis()/1000,
+	 							(int)System.currentTimeMillis(),
 	 							0,
 	 							0
 	 						));
@@ -249,7 +268,7 @@ public class Main extends Activity {
  	   public void run() {
  		   elapsedTime = System.currentTimeMillis() - startTime;
  		   timeView.setText(timeToString(elapsedTime));
- 		   time = (int) elapsedTime/1000;
+ 		   time = (int) elapsedTime;
  	       mHandler.postDelayed(this,REFRESH_RATE);
  	   }
  	};

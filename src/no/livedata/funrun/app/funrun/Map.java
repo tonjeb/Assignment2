@@ -26,13 +26,9 @@ import android.widget.EditText;
  * Activity for showing users location on map, and send it by email
  * Uses fragments to embed map
  */
-public class Map extends FragmentActivity implements android.location.LocationListener  {
+public class Map extends FragmentActivity  {
 	
 	private GoogleMap mMap; // to save map
-	private LocationManager locationManager; // to save location
-	private static final long MIN_TIME = 400; // min time between positionupdate (milliseconds)
-	private static final float MIN_DISTANCE = 10; // min distance between positionupdate (meters)
-	private LatLng latLng = new LatLng(0, 0); // set latLng to 0 position
 	
 
     @Override
@@ -42,47 +38,6 @@ public class Map extends FragmentActivity implements android.location.LocationLi
         
         setUpMapIfNeeded(); // initialize the map
         
-        
-        // initialize locationmanager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
-        
-        // Add menuicon to actionbar
-        try {
-            ViewConfiguration config = ViewConfiguration.get(this); // get view config
-            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey"); // get menuicon fireld
-            if(menuKeyField != null) { // if menufield avible
-                menuKeyField.setAccessible(true); // activate menuicon
-                menuKeyField.setBoolean(config, false);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onResume()
-     * On activity resumes
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded(); // check if map needs update
-        // start updating position again
-        // requestLocationUpdates(networkprovider, mintime(milliseconds), mindistance(meter), listener)
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onPause()
-     * on activity sent to background
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this); // stop updating position
     }
     
     /*
@@ -96,38 +51,6 @@ public class Map extends FragmentActivity implements android.location.LocationLi
 		return true;
 	}
     
-    /*
-     * (non-Javadoc)
-     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-     * on menuitem selected
-     */
-    @Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		/*switch (item.getItemId()) { // switch on selected element
-			case R.id.menu_net: // if the show net page selected
-				Intent chkLoc = new Intent(getApplicationContext(), CheckLocation.class); // new intent for CheckLocation activity
-	        	chkLoc.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        	// set extra parameters (latitude and longitude)
-	        	chkLoc.putExtra("lat",latLng.latitude + "");
-	        	chkLoc.putExtra("lng",latLng.longitude + "");
-	        	startActivity(chkLoc); // start the activity
-				break;
-			default:
-				break;
-		}	*/
-		return true;
-	}
-    
-    /*
-     * (non-Javadoc)
-     * @see android.location.LocationListener#onLocationChanged(android.location.Location)¨
-     */
-    @Override
-    public void onLocationChanged(Location location) {
-        latLng = new LatLng(location.getLatitude(), location.getLongitude()); // update latLng
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15); // create new position
-        mMap.animateCamera(cameraUpdate); // goto new position
-    }
     
     /*
      * setUpMapIfNeeded
@@ -152,23 +75,4 @@ public class Map extends FragmentActivity implements android.location.LocationLi
     private void setUpMap() {
         mMap.setMyLocationEnabled(true); // set map to show users position
     }
-
-	@Override
-	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
