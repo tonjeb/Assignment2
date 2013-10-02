@@ -190,10 +190,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-public ArrayList<Act> getActivitys(int id){
+public ArrayList<Act> getActivities(){
 	ArrayList<Act> output = new ArrayList<Act>(); // the return array
     
-    String selectQuery = "SELECT * FROM " + TABLE_ACT + " WHERE ACT_KEY_ID=" + id;
+    String selectQuery = "SELECT * FROM " + TABLE_ACT;
   
     // getredable db
     SQLiteDatabase db = this.getReadableDatabase();

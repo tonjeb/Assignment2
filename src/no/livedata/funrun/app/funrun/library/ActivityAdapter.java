@@ -31,7 +31,7 @@ public class ActivityAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		 View vi=convertView; // get the view
 	        if(convertView==null) // inflate it if its not set
-	            vi = inflater.inflate(R.layout.list_checklocation, null);
+	            vi = inflater.inflate(R.layout.activitylistitem, null);
 	        
 	        // get ui elements
 	       TextView time = (TextView)vi.findViewById(R.id.time);
