@@ -2,47 +2,81 @@ package no.livedata.funrun.app.funrun.library;
 
 public class Activity {
 	
-	String actKeyStart;
-	int actKeyId;
-	String actKeyTime;
-	
-	public String getActKeyStart() {
-		return actKeyStart;
-	}
+	int start;
+	int id;
+	int time;
+	Double dist;
 
-	public void setActKeyStart(String actKeyStart) {
-		this.actKeyStart = actKeyStart;
-	}
-
-	public int getActKeyId() {
-		return actKeyId;
-	}
-
-	public void setActKeyId(int actKeyId) {
-		this.actKeyId = actKeyId;
-	}
-
-	public String getActKeyTime() {
-		return actKeyTime;
-	}
-
-	public void setActKeyTime(String actKeyTime) {
-		this.actKeyTime = actKeyTime;
-	}
-
-
-	Activity() {
-		actKeyId = 0;
-		actKeyStart = "";
-		actKeyTime = "";
+	public Activity() {
+		id = 0;
+		start = "";
+		time = 0;
+		dist = 0.0;
 		
 	}
 	
-	Activity(int id, String start, String time) {
-		actKeyId = id;
-		actKeyStart = start;
-		actKeyTime = time;
+	public Activity(int id, int start, int time, Double dist) {
+		this.id = id;
+		this.start = start;
+		this.time = time;
+		this.dist = dist;
 		
+	}
+
+	/**
+	 * @return the start
+	 */
+	public int getStart() {
+		return start;
+	}
+
+	/**
+	 * @param start the start to set
+	 */
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public int getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	/**
+	 * @return the dist
+	 */
+	public Double getDist() {
+		return dist;
+	}
+
+	/**
+	 * @param dist the dist to set
+	 */
+	public void setDist(Double dist) {
+		this.dist = dist;
 	}
 	
 }

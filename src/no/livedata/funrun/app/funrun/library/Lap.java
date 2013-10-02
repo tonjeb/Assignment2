@@ -2,47 +2,81 @@ package no.livedata.funrun.app.funrun.library;
 
 public class Lap {
 	
-	int lapKeyId;
-	String lapKeyTime;
-	int lapKeyAct;
+	int id;
+	int time;
+	double dist;
+	int act;
 	
-	Lap() {
-		int lapKeyId = 0;
-		String lapKeyTime = "";
-		String lapKeyAct = "";
+	
+	public Lap() {
+		id = 0;
+		time = 0;
+		dist = 0.0;
+		act = 0;
 		
 	}
 	
-	public int getLapKeyId() {
-		return lapKeyId;
+	public Lap(int id, int time, double dist, int act) {
+		this.id = id;
+		this.time = time;
+		this.dist = dist;
+		this.act = act;
 	}
 
-	public void setLapKeyId(int lapKeyId) {
-		this.lapKeyId = lapKeyId;
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
-	public String getLapKeyTime() {
-		return lapKeyTime;
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setLapKeyTime(String lapKeyTime) {
-		this.lapKeyTime = lapKeyTime;
+	/**
+	 * @return the time
+	 */
+	public int getTime() {
+		return time;
 	}
 
-	public int getLapKeyAct() {
-		return lapKeyAct;
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(int time) {
+		this.time = time;
 	}
 
-	public void setLapKeyAct(int lapKeyAct) {
-		this.lapKeyAct = lapKeyAct;
+	/**
+	 * @return the dist
+	 */
+	public double getDist() {
+		return dist;
 	}
 
-	Lap(int id, String time, String act) {
-		int lapKeyId = id;
-		String lapKeyTime = time;
-		String lapKeyAct = act;
-		
+	/**
+	 * @param dist the dist to set
+	 */
+	public void setDist(double dist) {
+		this.dist = dist;
 	}
-	
+
+	/**
+	 * @return the act
+	 */
+	public int getAct() {
+		return act;
+	}
+
+	/**
+	 * @param act the act to set
+	 */
+	public void setAct(int act) {
+		this.act = act;
+	}	
 
 }
