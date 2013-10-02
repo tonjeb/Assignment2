@@ -18,6 +18,12 @@
     <string name="service_destroyed">Service Destroyed.</string>
     <string name="not_impl">Not yet implemented.</string>
     
+    <!-- Menu -->
+    <string name="nav_map">Map</string>
+    <string name="nav_lap">Lap</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_hist">Hist</string>
+    
     
     
 
