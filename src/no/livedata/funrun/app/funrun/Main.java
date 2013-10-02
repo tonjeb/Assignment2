@@ -71,15 +71,10 @@ public class Main extends Activity {
 		distView = (TextView) findViewById(R.id.DistView);
 		lapView = (TextView) findViewById(R.id.LapView);
 	
-<<<<<<< HEAD
 		StartButton.setTag(1);
 		StartButton.setText(getResources().getString(R.string.start));
 		StartButton.setOnClickListener( new View.OnClickListener() {
-=======
 		startButton.setTag(1);
-		startButton.setText("Start");//husk å sette string
-		startButton.setOnClickListener( new View.OnClickListener() {
->>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
 	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
@@ -91,43 +86,30 @@ public class Main extends Activity {
 					Log.d("SE","Service started");
 					
 				    //take the time
-<<<<<<< HEAD
+
 					LapButton.setText(getResources().getString(R.string.lap));
 					LapButton.setEnabled(true);
 				    StartButton.setText(getResources().getString(R.string.stop));
-=======
-					lapButton.setText("Lap");//husk å sette string
-					lapButton.setEnabled(true);
-				    startButton.setText("Stop");//husk å sette string
->>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
+s
 				    v.setTag(0); //pause
 				} else { // STOP
 					stopTime();
 					stopService(serviceIntent);
 					
-<<<<<<< HEAD
+
 				    StartButton.setText(getResources().getString(R.string.start));
 				    LapButton.setText(getResources().getString(R.string.reset));
-=======
-				    startButton.setText("Start");//husk å sette string
-				    lapButton.setText("Reset");//husk å sette string
->>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
+
 				    v.setTag(1); //pause
 				} 
 			}
 		});
 		
-<<<<<<< HEAD
+
 		LapButton.setTag(1);
 		LapButton.setText(getResources().getString(R.string.lap));
 		LapButton.setEnabled(false);
 		LapButton.setOnClickListener(new View.OnClickListener() {
-=======
-		lapButton.setTag(1);
-		lapButton.setText("Lap");//husk å sette string
-		lapButton.setEnabled(false);
-		lapButton.setOnClickListener(new View.OnClickListener() {
->>>>>>> branch 'master' of https://github.com/tonjeb/Assignment2.git
 	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
