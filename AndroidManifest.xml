@@ -41,7 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="LoggingService"></service>
+        <service android:name=".LoggerService" > </service>
+        <service android:name=".GPSLogger" > </service>
     </application>
 
 </manifest>

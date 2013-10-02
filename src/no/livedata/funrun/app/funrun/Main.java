@@ -2,9 +2,11 @@ package no.livedata.funrun.app.funrun;
 
 import java.util.Locale;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,7 +21,7 @@ import android.widget.TextView;
 
 public class Main extends Activity {
 	
-	LoggingService ls;
+	Intent serviceIntent;
 	
 	Button StartButton;
 	Button LapButton;
@@ -40,8 +42,7 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		ls = new LoggingService(getApplicationContext());
-		Log.d("LS", "ls called");
+		serviceIntent = new Intent(Main.this, LoggerService.class); 
 		
 		StartButton = (Button) findViewById(R.id.StartButton);
 		LapButton = (Button) findViewById(R.id.LapButton);
@@ -56,7 +57,9 @@ public class Main extends Activity {
 				final int status =(Integer) v.getTag();
 				if(status == 1) { // START
 					startTime();
-					ls.startService();
+					serviceIntent.putExtra("ACT", "1");
+					startService(serviceIntent);
+					Log.d("SE","Service started");
 					
 				    //take the time
 					LapButton.setText("Lap");//husk å sette string
@@ -65,7 +68,7 @@ public class Main extends Activity {
 				    v.setTag(0); //pause
 				} else { // STOP
 					stopTime();
-					ls.stopService();
+					stopService(serviceIntent);
 					
 				    StartButton.setText("Start");//husk å sette string
 				    LapButton.setText("Reset");//husk å sette string
