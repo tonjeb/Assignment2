@@ -31,6 +31,19 @@ public class LoggerService extends Service implements LocationListener {
     // Location Manager to controll location
     protected LocationManager locationManager;
     
+    // helpers to calculate distance
+    double lastLat = 0;
+    double lastLon = 0;
+    
+    float dist[] = new float[1];
+    
+    // current distance
+    long distance = 0; // in km
+    
+    // intent action to update ui
+    final static String UPDATE_UI = "UPDATE_UI";
+    
+    // the id of the current activity
 	int activity;
 	
 	public LoggerService() {
@@ -60,7 +73,9 @@ public class LoggerService extends Service implements LocationListener {
     @Override
     public void onDestroy() {
         Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
-
+        if(locationManager != null){
+            locationManager.removeUpdates(LoggerService.this);
+        }
     }
     
     @Override
@@ -97,6 +112,25 @@ public class LoggerService extends Service implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.d("GPS","Location logged: "+location.getLatitude() + " " + location.getLongitude());
+		location.getAltitude();
+		location.getSpeed();
+		
+		if(lastLat != 0 && lastLon != 0) { 
+	       Location.distanceBetween(lastLat,lastLon,location.getLatitude(),location.getLongitude(),dist);
+	       distance+=(long)dist[0];
+	    }
+
+	    lastLat=location.getLatitude();
+	    lastLon=location.getLongitude();
+	    
+	    Log.d("GPS","Distance: " + (double)distance/1000);
+		// DB connection here
+	    
+	    // notify ui about change
+	    Intent intent = new Intent();
+	    intent.setAction(UPDATE_UI);
+	    intent.putExtra("DIST", distance);
+	    sendBroadcast(intent);
 	}
 
 	@Override

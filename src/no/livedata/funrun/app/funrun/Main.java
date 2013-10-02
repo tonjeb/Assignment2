@@ -5,8 +5,11 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,29 +21,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main extends Activity {
 	
+	LoggerReceiver logReceiver;
 	Intent serviceIntent;
 	
 	Button StartButton;
 	Button LapButton;
 	TextView TimeView;
+	TextView DistView;
 	
 	// Timer
-	private Handler mHandler = new Handler();
-	private long startTime;
-	private long stopTime;
-	private long elapsedTime;
-	private final int REFRESH_RATE = 100;
-	private String hours,minutes,seconds;
-	private long secs,mins,hrs;
-	private boolean stopped = false;
+	Handler mHandler = new Handler();
+	long startTime;
+	long stopTime;
+	long elapsedTime;
+	final int REFRESH_RATE = 100;
+	String hours,minutes,seconds;
+	long secs,mins,hrs;
+	boolean stopped = false;
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		logReceiver = new LoggerReceiver();
+	    IntentFilter intentFilter = new IntentFilter();
+	    intentFilter.addAction(LoggerService.UPDATE_UI);
+	    registerReceiver(logReceiver, intentFilter);
 		
 		serviceIntent = new Intent(Main.this, LoggerService.class); 
 		
@@ -48,6 +59,7 @@ public class Main extends Activity {
 		LapButton = (Button) findViewById(R.id.LapButton);
 		
 		TimeView = (TextView) findViewById(R.id.TimeView);
+		DistView = (TextView) findViewById(R.id.DistView);
 	
 		StartButton.setTag(1);
 		StartButton.setText("Start");//husk å sette string
@@ -116,7 +128,7 @@ public class Main extends Activity {
 	    new AlertDialog.Builder(this)
 	        .setIcon(android.R.drawable.ic_dialog_alert)
 	        .setTitle("Avslutte") // TODO: Bruke stringer
-	        .setMessage("Ved å gå ut av appen avsluttes tellingen. Vil du gå ut?")
+	        .setMessage("Ved å gå ut av appen avsluttes aktiviteten. Vil du virkelig gå ut?")
 	        .setPositiveButton("Ja", new DialogInterface.OnClickListener()
 	    {
 	        @Override
@@ -127,6 +139,31 @@ public class Main extends Activity {
 	    })
 	    .setNegativeButton("Nei", null)
 	    .show();
+	}
+	
+	@Override
+	protected void onStop() {
+		unregisterReceiver(logReceiver);
+		super.onStop();
+	}
+	
+	private class LoggerReceiver extends BroadcastReceiver{
+		 
+		 @Override
+		 public void onReceive(Context arg0, Intent arg1) {
+
+		  long dist = arg1.getLongExtra("DIST", -1);
+		  
+		  if (dist != -1) {
+			  Toast.makeText(Main.this,
+			    "Triggered by Service!\n"
+			    + "Data passed: " + String.valueOf(dist),
+			    Toast.LENGTH_LONG).show();
+			  DistView.setText((double)dist/1000+"");
+		  }
+		  
+		 }
+		 
 	}
 	
 	/* timer */

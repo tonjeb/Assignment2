@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/LengthView"
+        android:id="@+id/DistView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -22,7 +22,7 @@
         android:id="@+id/StartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/LengthView"
+        android:layout_alignRight="@+id/DistView"
         android:layout_below="@+id/TimeView"
         android:layout_marginRight="17dp"
         android:layout_marginTop="37dp"
@@ -52,7 +52,7 @@
         android:id="@+id/LapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/LengthView"
+        android:layout_alignBottom="@+id/DistView"
         android:layout_marginBottom="22dp"
         android:layout_toLeftOf="@+id/TimeView"
         android:text="Reset" />
