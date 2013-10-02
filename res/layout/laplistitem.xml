@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/dist"
@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/time"
-        android:layout_marginTop="39dp"
-        android:text="Dist" 
+        android:text="Dist"
         android:textAppearance="?android:attr/textAppearanceMedium" />
        
 </RelativeLayout>

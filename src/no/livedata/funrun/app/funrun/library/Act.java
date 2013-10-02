@@ -2,8 +2,8 @@ package no.livedata.funrun.app.funrun.library;
 
 public class Act {
 	
-	int start;
 	int id;
+	int start;
 	int time;
 	int dist;
 
