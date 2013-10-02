@@ -27,8 +27,14 @@ public class ActivityAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
+	@Override
+	public View getView(int arg0, View arg1, ViewGroup arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	public View getView(int position, View convertView, ViewGroup parent) {
+	/*public View getView(int position, View convertView, ViewGroup parent) {
 		 View vi=convertView; // get the view
 	        if(convertView==null) // inflate it if its not set
 	            vi = inflater.inflate(R.layout.activitylistitem, null);
@@ -45,5 +51,5 @@ public class ActivityAdapter extends BaseAdapter {
 	        start.setText(res.getStart());
 	        
 		return vi;
-	}
+	}*/
 }

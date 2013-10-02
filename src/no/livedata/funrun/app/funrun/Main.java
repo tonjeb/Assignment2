@@ -124,7 +124,7 @@ public class Main extends Activity {
 		});
 		
 
-		lapButton.setTag(1);
+		lapButton.setTag(0);
 		lapButton.setText(getResources().getString(R.string.lap));
 		lapButton.setEnabled(false);
 		lapButton.setOnClickListener(new View.OnClickListener() {
@@ -135,10 +135,8 @@ public class Main extends Activity {
 					resetTime();
 					closeActivity();
 					//reset time for lap and save the time
-				    v.setTag(0); //pause
 				} else { // LAP
 					newLap();
-				    v.setTag(1); //pause
 				} 
 			}
 
