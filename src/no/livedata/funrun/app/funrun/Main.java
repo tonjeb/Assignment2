@@ -50,13 +50,13 @@ public class Main extends Activity {
 	long stopTime;
 	long elapsedTime;
 	final int REFRESH_RATE = 100;
-	String hours,minutes,seconds;
-	long secs,mins,hrs;
 	boolean stopped = false;
 	
 	int distance = 0;
 	int activity = -1;
 	int time = 0;
+	
+	int currentLap = 0;
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,6 @@ public class Main extends Activity {
 		startButton.setTag(1);
 		startButton.setText(getResources().getString(R.string.start));
 		startButton.setOnClickListener( new View.OnClickListener() {
-	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
 				if(status == 1) { // START
@@ -109,7 +108,7 @@ public class Main extends Activity {
 					lapButton.setEnabled(true);
 				    startButton.setText(getResources().getString(R.string.stop));
 				    v.setTag(0); //pause
-
+				    lapButton.setTag(0); // set lap button to lap
 				} else { // STOP
 					stopTime();
 					stopService(serviceIntent);
@@ -119,16 +118,16 @@ public class Main extends Activity {
 				    lapButton.setText(getResources().getString(R.string.reset));
 
 				    v.setTag(1); //pause
+				    lapButton.setTag(1); // set lap button to reset
 				} 
 			}
 		});
 		
 
-		lapButton.setTag(0);
+		lapButton.setTag(1);
 		lapButton.setText(getResources().getString(R.string.lap));
 		lapButton.setEnabled(false);
 		lapButton.setOnClickListener(new View.OnClickListener() {
-	
 			public void onClick (View v) {
 				final int status =(Integer) v.getTag();
 				if(status == 1) { // RESET
@@ -138,11 +137,6 @@ public class Main extends Activity {
 				} else { // LAP
 					newLap();
 				} 
-			}
-
-			private void setEnabled(boolean b) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
@@ -177,6 +171,7 @@ public class Main extends Activity {
 	@Override
 	protected void onStop() {
 		unregisterReceiver(logReceiver);
+		closeActivity();
 		super.onStop();
 	}
 	
@@ -212,6 +207,7 @@ public class Main extends Activity {
  							activity
  						));
  		db.close();
+ 		currentLap = time;
  		lapView.setText(timeToString(time));
 	}
 	
@@ -259,19 +255,26 @@ public class Main extends Activity {
     
     public void resetTime (){
     	stopped = false;
-    	timeView.setText("00:00:00");	
+    	timeView.setText("00:00:00");
+    	lapView.setText("00:00:00");
     }
     
     private Runnable startTimer = new Runnable() {
  	   public void run() {
  		   elapsedTime = System.currentTimeMillis() - startTime;
  		   timeView.setText(timeToString(elapsedTime));
+ 		   if (currentLap != 0) {
+ 			   lapView.setText(timeToString(elapsedTime-currentLap));
+ 		   }
  		   time = (int) elapsedTime;
  	       mHandler.postDelayed(this,REFRESH_RATE);
  	   }
  	};
 	 	
 	private String timeToString (float time){
+		
+		String hours,minutes,seconds;
+		long secs,mins,hrs;
 		
 		secs = (long)(time/1000);
 		mins = (long)((time/1000)/60);
@@ -281,7 +284,7 @@ public class Main extends Activity {
 		seconds=String.valueOf(secs);
     	if(secs == 0){
     		seconds = "00";
-    	}else if(secs <10 && secs > 0){
+    	}else if(secs < 10 && secs > 0){
     		seconds = "0"+seconds;
     	}
     	
@@ -289,14 +292,14 @@ public class Main extends Activity {
 		minutes=String.valueOf(mins);
     	if(mins == 0){
     		minutes = "00";
-    	}else if(mins <10 && mins > 0){
+    	}else if(mins < 10 && mins > 0){
     		minutes = "0"+minutes;
     	}
 		
     	hours=String.valueOf(hrs);
     	if(hrs == 0){
     		hours = "00";
-    	}else if(hrs <10 && hrs > 0){
+    	}else if(hrs < 10 && hrs > 0){
     		hours = "0"+hours;
     	}
     	
