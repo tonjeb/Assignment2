@@ -3,6 +3,21 @@
 
     <string name="app_name">FunRun</string>
     <string name="action_settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="lap">Lap</string>
+    <string name="stop">Stop</string>
+    <string name="reset">Reset</string>
+    <string name="quit">Quit?</string>
+    <string name="sure">Are you sure you want to quit this app? Your data may be lost.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    
+    <string name="service">The new Service was Created.</string>
+    <string name="service_started"> Service Started.</string>
+    <string name="act"> Activity: </string>
+    <string name="service_destroyed">Service Destroyed.</string>
+    <string name="not_impl">Not yet implemented.</string>
+    
     
     
 

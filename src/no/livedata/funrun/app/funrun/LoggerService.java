@@ -51,19 +51,18 @@ public class LoggerService extends Service implements LocationListener {
 	
 	@Override
     public void onCreate() {
-        Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, getResources().getString(R.string.service), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
     	context = this;
-        Toast.makeText(this, " Service Started", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.service_started), Toast.LENGTH_LONG).show();
         Bundle extras = intent.getExtras(); 
 		if(extras != null) {
 		    activity = (int) Integer.parseInt(extras.get("ACT").toString());
 		    Log.d("GPS","Logger started");
-		    Toast.makeText(this, " Act: " + activity, Toast.LENGTH_LONG).show();
+		    Toast.makeText(this, getResources().getString(R.string.act) + activity, Toast.LENGTH_LONG).show();
 		    startLocationListener();
 		}
 
@@ -72,7 +71,7 @@ public class LoggerService extends Service implements LocationListener {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getString(R.string.service_destroyed), Toast.LENGTH_LONG).show();
         if(locationManager != null){
             locationManager.removeUpdates(LoggerService.this);
         }
@@ -81,7 +80,7 @@ public class LoggerService extends Service implements LocationListener {
     @Override
 	public IBinder onBind(Intent intent) {
 		// TODO: Return the communication channel to the service.
-		throw new UnsupportedOperationException("Not yet implemented");
+		throw new UnsupportedOperationException(getResources().getString(R.string.not_impl));
 	}
     
     private void startLocationListener() {

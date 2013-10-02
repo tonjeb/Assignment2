@@ -62,7 +62,7 @@ public class Main extends Activity {
 		DistView = (TextView) findViewById(R.id.DistView);
 	
 		StartButton.setTag(1);
-		StartButton.setText("Start");//husk å sette string
+		StartButton.setText(getResources().getString(R.string.start));
 		StartButton.setOnClickListener( new View.OnClickListener() {
 	
 			public void onClick (View v) {
@@ -74,23 +74,23 @@ public class Main extends Activity {
 					Log.d("SE","Service started");
 					
 				    //take the time
-					LapButton.setText("Lap");//husk å sette string
+					LapButton.setText(getResources().getString(R.string.lap));
 					LapButton.setEnabled(true);
-				    StartButton.setText("Stop");//husk å sette string
+				    StartButton.setText(getResources().getString(R.string.stop));
 				    v.setTag(0); //pause
 				} else { // STOP
 					stopTime();
 					stopService(serviceIntent);
 					
-				    StartButton.setText("Start");//husk å sette string
-				    LapButton.setText("Reset");//husk å sette string
+				    StartButton.setText(getResources().getString(R.string.start));
+				    LapButton.setText(getResources().getString(R.string.reset));
 				    v.setTag(1); //pause
 				} 
 			}
 		});
 		
 		LapButton.setTag(1);
-		LapButton.setText("Lap");//husk å sette string
+		LapButton.setText(getResources().getString(R.string.lap));
 		LapButton.setEnabled(false);
 		LapButton.setOnClickListener(new View.OnClickListener() {
 	
@@ -127,9 +127,9 @@ public class Main extends Activity {
 	public void onBackPressed() {
 	    new AlertDialog.Builder(this)
 	        .setIcon(android.R.drawable.ic_dialog_alert)
-	        .setTitle("Avslutte") // TODO: Bruke stringer
-	        .setMessage("Ved å gå ut av appen avsluttes aktiviteten. Vil du virkelig gå ut?")
-	        .setPositiveButton("Ja", new DialogInterface.OnClickListener()
+	        .setTitle(getResources().getString(R.string.quit))
+	        .setMessage(getResources().getString(R.string.sure)) 
+	        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener()
 	    {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
@@ -137,7 +137,7 @@ public class Main extends Activity {
 	        }
 
 	    })
-	    .setNegativeButton("Nei", null)
+	    .setNegativeButton(getResources().getString(R.string.no), null)
 	    .show();
 	}
 	

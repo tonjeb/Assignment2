@@ -47,8 +47,6 @@ public class Map extends FragmentActivity implements android.location.LocationLi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         
-        
-        
         // Add menuicon to actionbar
         try {
             ViewConfiguration config = ViewConfiguration.get(this); // get view config
