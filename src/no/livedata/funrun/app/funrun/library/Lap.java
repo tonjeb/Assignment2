@@ -5,6 +5,8 @@ public class Lap {
 	int id;
 	int time;
 	int dist;
+	double lat;
+	double lon;
 	int act;
 	
 	
@@ -12,14 +14,18 @@ public class Lap {
 		id = 0;
 		time = 0;
 		dist = 0;
+		lat = 0.0;
+		lon = 0.0;
 		act = 0;
 		
 	}
 	
-	public Lap(int id, int time, int dist, int act) {
+	public Lap(int id, int time, int dist, double lat, double lon, int act) {
 		this.id = id;
 		this.time = time;
 		this.dist = dist;
+		this.lat = lat;
+		this.lon = lon;
 		this.act = act;
 	}
 
@@ -63,6 +69,34 @@ public class Lap {
 	 */
 	public void setDist(int dist) {
 		this.dist = dist;
+	}
+
+	/**
+	 * @return the lat
+	 */
+	public double getLat() {
+		return lat;
+	}
+
+	/**
+	 * @param lat the lat to set
+	 */
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	/**
+	 * @return the lon
+	 */
+	public double getLon() {
+		return lon;
+	}
+
+	/**
+	 * @param lon the lon to set
+	 */
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 
 	/**

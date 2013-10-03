@@ -35,6 +35,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String LAP_KEY_ID = "id";
 	public static final String LAP_KEY_TIME = "time";
 	public static final String LAP_KEY_DIST = "dist";
+	public static final String LAP_KEY_LAT = "lat";
+	public static final String LAP_KEY_LON = "lon";
 	public static final String LAP_KEY_ACT = "act";
 	
 	// Log table name
@@ -67,6 +69,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ LAP_KEY_ID + " INTEGER PRIMARY KEY,"
 				+ LAP_KEY_TIME + " INTEGER,"
 				+ LAP_KEY_DIST + " INTEGER,"
+				+ LAP_KEY_LAT + " REAL,"
+				+ LAP_KEY_LON + " REAL,"
 				+ LAP_KEY_ACT + " INTEGER" + ")";
 		db.execSQL(CREATE_LAP_TABLE);
 		
@@ -95,12 +99,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void insertLap(Lap newLap) {
 		int time = newLap.getTime();
 		double dist = newLap.getDist();
+		double lat = newLap.getLat();
+		double lon = newLap.getLon();
 		int act = newLap.getAct();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues insert = new ContentValues(); 
 		insert.put(LAP_KEY_TIME, time);
 		insert.put(LAP_KEY_DIST, dist);
+		insert.put(LAP_KEY_LAT, lat);
+		insert.put(LAP_KEY_LON, lon);
 		insert.put(LAP_KEY_ACT, act);
 
 		// Prepared statement + sqlite 
@@ -176,6 +184,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_TIME)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_DIST)),
+            			cursor.getDouble(cursor.getColumnIndex(LAP_KEY_LAT)),
+            			cursor.getDouble(cursor.getColumnIndex(LAP_KEY_LON)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ACT))
             		)
             	);

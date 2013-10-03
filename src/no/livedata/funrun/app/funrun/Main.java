@@ -57,6 +57,8 @@ public class Main extends Activity {
 	int time = 0;
 	
 	int currentLap = 0;
+	double lat = 0.0;
+	double lon = 0.0;
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +206,8 @@ public class Main extends Activity {
  							0,
  							time,
  							distance,
+ 							lat,
+ 							lon,
  							activity
  						));
  		db.close();
@@ -218,6 +222,8 @@ public class Main extends Activity {
 
 		  long dist = in.getLongExtra("DIST", -1);
 		  double speed = in.getDoubleExtra("SPEED", -1);
+		  lat = in.getDoubleExtra("LAT", 0.0);
+		  lon = in.getDoubleExtra("LON", 0.0);
 		  
 		  if (dist != -1) {
 			  Toast.makeText(Main.this,
