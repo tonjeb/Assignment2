@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FunRun</string>
+    <string name="action_settings">Innstillinger</string>
+    <string name="start">Start</string>
+    <string name="lap">Lap</string>
+    <string name="stop">Stopp</string>
+    <string name="reset">Reset</string>
+    <string name="quit">Avslutte?</string>
+    <string name="sure">Ved å gå ut av appen avsluttes aktiviteten. Vil du virkelig gå ut?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nei</string>
+    
+    <string name="service">Den nye servicen ble opprettet.</string>
+    <string name="service_started"> Service er startet.</string>
+    <string name="act"> Aktivitet: </string>
+    <string name="service_destroyed">Service avsluttet.</string>
+    <string name="not_impl">Ikke implementert enda.</string>
+    
+
+</resources>

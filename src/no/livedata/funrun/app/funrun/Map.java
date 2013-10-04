@@ -34,11 +34,21 @@ public class Map extends FragmentActivity implements LocationListener {
 	private LocationManager locationManager; // to save location
 	private static final long MIN_TIME = 5000; // min time between positionupdate (milliseconds)
 	private static final float MIN_DISTANCE = 0.1f; // min distance between positionupdate (meters)
+	
+	Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+        
+        backButton = (Button) findViewById(R.id.backButton);
+        
+        backButton.setOnClickListener( new View.OnClickListener() {
+			public void onClick (View v) {
+				finish();
+			}
+		});
         
         setUpMapIfNeeded(); // initialize the map
         

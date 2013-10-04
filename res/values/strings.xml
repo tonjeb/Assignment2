@@ -3,10 +3,22 @@
 
     <string name="app_name">FunRun</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- common -->
+    <string name="back">Back</string>
+    
+    <!-- main layout -->
+    <string name="time">Time</string>
+    <string name="laptime">Lap time</string>
+    <string name="distance">Distance</string>
+    <string name="speed">Speed</string>
+    
     <string name="start">Start</string>
     <string name="lap">Lap</string>
     <string name="stop">Stop</string>
     <string name="reset">Reset</string>
+    
+    <!--  exit menu -->
     <string name="quit">Quit?</string>
     <string name="sure">Are you sure you want to quit this app? Your data may be lost.</string>
     <string name="yes">Yes</string>
@@ -20,9 +32,8 @@
     
     <!-- Menu -->
     <string name="nav_map">Map</string>
-    <string name="nav_lap">Lap</string>
-    <string name="nav_home">Home</string>
-    <string name="nav_hist">Hist</string>
+    <string name="nav_lap">Laps</string>
+    <string name="nav_hist">History</string>
     
     
     

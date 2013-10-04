@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class Main extends Activity {
 	TextView timeView;
 	TextView distView;
 	TextView lapView;
+	TextView speedView;
 	
 	// Menu
 	Button mBtnMap;
@@ -77,12 +79,15 @@ public class Main extends Activity {
 		timeView = (TextView) findViewById(R.id.TimeView);
 		distView = (TextView) findViewById(R.id.DistView);
 		lapView = (TextView) findViewById(R.id.LapView);
+		speedView = (TextView) findViewById(R.id.speedView);
 		
 		// menu
 		mBtnMap = (Button) findViewById(R.id.mBtnMap);
 		mBtnLap = (Button) findViewById(R.id.mBtnLap);
-		mBtnHome = (Button) findViewById(R.id.mBtnHome);
 		mBtnHist = (Button) findViewById(R.id.mBtnHist);
+		
+		startButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+		lapButton.getBackground().setColorFilter(0xFF00FFFF, PorterDuff.Mode.MULTIPLY);
 		
 		mBtnMap.setOnClickListener( new View.OnClickListener() {
 			public void onClick (View v) {
@@ -109,6 +114,8 @@ public class Main extends Activity {
 					lapButton.setText(getResources().getString(R.string.lap));
 					lapButton.setEnabled(true);
 				    startButton.setText(getResources().getString(R.string.stop));
+				    startButton.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+				    lapButton.getBackground().setColorFilter(0xFFFFFF00, PorterDuff.Mode.MULTIPLY);
 				    v.setTag(0); //pause
 				    lapButton.setTag(0); // set lap button to lap
 				} else { // STOP
@@ -118,7 +125,8 @@ public class Main extends Activity {
 
 				    startButton.setText(getResources().getString(R.string.start));
 				    lapButton.setText(getResources().getString(R.string.reset));
-
+				    startButton.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+				    lapButton.getBackground().setColorFilter(0xFF00FFFF, PorterDuff.Mode.MULTIPLY);
 				    v.setTag(1); //pause
 				    lapButton.setTag(1); // set lap button to reset
 				} 
@@ -191,6 +199,7 @@ public class Main extends Activity {
 	 							0
 	 						));
 	 		db.close();
+	 		mBtnLap.setEnabled(true);
 		}
 	}
 	
@@ -200,6 +209,7 @@ public class Main extends Activity {
  		db.updateActivity(activity,time,distance); // update current activity with time and distance
  		db.close();
  		activity = -1;
+ 		mBtnLap.setEnabled(false);
 	}
 	
 	private void newLap() {
@@ -229,17 +239,12 @@ public class Main extends Activity {
 			  lon = in.getDoubleExtra("LON", 0.0);
 			  
 			  if (dist != -1) {
-				  Toast.makeText(Main.this,
-				    "Triggered by Service!\n"
-				    + "Data passed: " + String.valueOf(dist),
-				    Toast.LENGTH_LONG).show();
 				  distance = (int) dist;
 				  distView.setText((double)dist/1000+"");
 			  }
 			  
 			  if (speed != -1) {
-				  //DistView.setText((double)dist/1000+"");
-				  // TODO: Display current speed
+				  speedView.setText(speed+"");
 			  }
 		  
 		 }
@@ -265,8 +270,10 @@ public class Main extends Activity {
     
     public void resetTime (){
     	stopped = false;
-    	timeView.setText("00:00:00");
-    	lapView.setText("00:00:00");
+    	timeView.setText("00:00");
+    	lapView.setText("00:00");
+    	distView.setText("0.0");
+    	speedView.setText("0.0");
     }
     
     private Runnable startTimer = new Runnable() {
