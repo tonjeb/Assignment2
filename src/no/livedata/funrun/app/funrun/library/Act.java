@@ -3,8 +3,8 @@ package no.livedata.funrun.app.funrun.library;
 public class Act {
 	
 	int id;
-	int start;
-	int time;
+	long start;
+	long time;
 	int dist;
 
 	public Act() {
@@ -14,7 +14,7 @@ public class Act {
 		dist = 0;
 	}
 	
-	public Act(int id, int start, int time, int dist) {
+	public Act(int id, long start, long time, int dist) {
 		this.id = id;
 		this.start = start;
 		this.time = time;
@@ -24,14 +24,14 @@ public class Act {
 	/**
 	 * @return the start
 	 */
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
 
 	/**
 	 * @param start the start to set
 	 */
-	public void setStart(int start) {
+	public void setStart(long start) {
 		this.start = start;
 	}
 
@@ -52,14 +52,14 @@ public class Act {
 	/**
 	 * @return the time
 	 */
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 

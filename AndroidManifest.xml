@@ -45,6 +45,12 @@
         <activity
             android:name="no.livedata.funrun.app.funrun.Map"
             android:label="@string/app_name" />
+         <activity
+            android:name="no.livedata.funrun.app.funrun.ShowActivity"
+            android:label="@string/app_name" />
+          <activity
+            android:name="no.livedata.funrun.app.funrun.ShowLaps"
+            android:label="@string/app_name" />
         <service android:name=".LoggerService" > </service>
     </application>
 

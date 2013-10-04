@@ -58,9 +58,9 @@ public class Main extends Activity {
 	
 	int distance = 0;
 	int activity = -1;
-	int time = 0;
+	long time = 0;
 	
-	int currentLap = 0;
+	long currentLap = 0;
 	double lat = 0.0;
 	double lon = 0.0;
 	
@@ -99,6 +99,23 @@ public class Main extends Activity {
 	        	mapInt.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        	mapInt.putExtra("act",activity);
 	        	startActivity(mapInt); // start the activity
+			}
+		});
+		
+		mBtnLap.setOnClickListener( new View.OnClickListener() {
+			public void onClick (View v) {
+				Intent lapInt = new Intent(getApplicationContext(), ShowLaps.class); 
+	        	lapInt.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        	lapInt.putExtra("act",activity);
+	        	startActivity(lapInt); // start the activity
+			}
+		});
+		
+		mBtnHist.setOnClickListener( new View.OnClickListener() {
+			public void onClick (View v) {
+				Intent actInt = new Intent(getApplicationContext(), ShowActivity.class); 
+	        	actInt.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        	startActivity(actInt); // start the activity
 			}
 		});
 		
@@ -193,7 +210,7 @@ public class Main extends Activity {
 	 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 	 		activity = db.insertActivity(new Act(
 	 							0,
-	 							(int)System.currentTimeMillis(),
+	 							(long)System.currentTimeMillis(),
 	 							0,
 	 							0
 	 						));

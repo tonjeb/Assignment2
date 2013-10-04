@@ -4,19 +4,20 @@
     android:layout_height="match_parent"
     tools:context=".CheckLocation" >
 
-    <include
-        android:id="@+id/include"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/navmenu" />
-
     <ListView
         android:id="@+id/activityList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/include" >
+        android:layout_alignParentTop="true" >
+
     </ListView>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/back" />
 
 </RelativeLayout>

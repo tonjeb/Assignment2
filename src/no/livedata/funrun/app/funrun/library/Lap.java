@@ -3,7 +3,7 @@ package no.livedata.funrun.app.funrun.library;
 public class Lap {
 	
 	int id;
-	int time;
+	long time;
 	int dist;
 	double lat;
 	double lon;
@@ -20,7 +20,7 @@ public class Lap {
 		
 	}
 	
-	public Lap(int id, int time, int dist, double lat, double lon, int act) {
+	public Lap(int id, long time, int dist, double lat, double lon, int act) {
 		this.id = id;
 		this.time = time;
 		this.dist = dist;
@@ -46,14 +46,14 @@ public class Lap {
 	/**
 	 * @return the time
 	 */
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 

@@ -5,7 +5,7 @@ public class Logg {
 	int id;
 	double lat;
 	double lon;
-	int time;
+	long time;
 	double alt;
 	double speed;
 	int act;
@@ -20,7 +20,7 @@ public class Logg {
 		act = 0;
 	}
 	
-	public Logg(int id, double lat, double lon, int time, double alt, double speed, int act) {
+	public Logg(int id, double lat, double lon, long time, double alt, double speed, int act) {
 		this.id = id;
 		this.lat = lat;
 		this.lon = lon;
@@ -75,14 +75,14 @@ public class Logg {
 	/**
 	 * @return the time
 	 */
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 

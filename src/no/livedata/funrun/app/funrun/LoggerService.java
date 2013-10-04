@@ -145,7 +145,7 @@ public class LoggerService extends Service implements LocationListener {
 	 							0,
 	 							location.getLatitude(),
 	 							location.getLongitude(),
-	 							(int)System.currentTimeMillis(),
+	 							(long)System.currentTimeMillis(),
 	 							location.getAltitude(),
 	 							location.getSpeed(),
 	 							activity

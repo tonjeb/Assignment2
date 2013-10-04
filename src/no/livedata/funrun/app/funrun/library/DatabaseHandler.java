@@ -14,7 +14,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 3;
 
 	// Database Name
 	private static final String DATABASE_NAME = "funrundb";
@@ -60,14 +60,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_ACT_TABLE = "CREATE TABLE " + TABLE_ACT + "("
 				+ ACT_KEY_ID + " INTEGER PRIMARY KEY," 
-				+ ACT_KEY_START + " INTEGER,"
+				+ ACT_KEY_START + " TEXT,"
 				+ ACT_KEY_DIST + " INTEGER,"
-				+ ACT_KEY_TIME + " INTEGER" + ")";
+				+ ACT_KEY_TIME + " TEXT" + ")";
 		db.execSQL(CREATE_ACT_TABLE);
 		
 		String CREATE_LAP_TABLE = "CREATE TABLE " + TABLE_LAP + "("
 				+ LAP_KEY_ID + " INTEGER PRIMARY KEY,"
-				+ LAP_KEY_TIME + " INTEGER,"
+				+ LAP_KEY_TIME + " TEXT,"
 				+ LAP_KEY_DIST + " INTEGER,"
 				+ LAP_KEY_LAT + " REAL,"
 				+ LAP_KEY_LON + " REAL,"
@@ -78,7 +78,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ LOG_KEY_ID + " INTEGER PRIMARY KEY," 
 				+ LOG_KEY_LAT + " REAL,"
 				+ LOG_KEY_LON + " REAL,"
-				+ LOG_KEY_TIME + " INTEGER,"
+				+ LOG_KEY_TIME + " TEXT,"
 				+ LOG_KEY_ALT + " REAL,"
 				+ LOG_KEY_SPEED + " REAL,"
 				+ LOG_KEY_ACT + " INTEGER" + ")";
@@ -97,7 +97,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	public void insertLap(Lap newLap) {
-		int time = newLap.getTime();
+		long time = newLap.getTime();
 		double dist = newLap.getDist();
 		double lat = newLap.getLat();
 		double lon = newLap.getLon();
@@ -118,8 +118,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}	
 	
 	public int insertActivity(Act newActivity) {
-		int time = newActivity.getTime();
-		int start = newActivity.getStart();
+		long time = newActivity.getTime();
+		long start = newActivity.getStart();
 		double dist = newActivity.getDist();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -138,7 +138,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void insertLogg(Logg newLogg) {
 		double lat = newLogg.getLat();
 		double lon = newLogg.getLon();
-		int time = newLogg.getTime();
+		long time = newLogg.getTime();
 		double alt = newLogg.getAlt();
 		double speed = newLogg.getSpeed();
 		int act = newLogg.getAct();
@@ -157,7 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();	
 	}	
 	
-	public void updateActivity(int id, int time, int dist) {	
+	public void updateActivity(int id, long time, int dist) {	
 		SQLiteDatabase db = this.getWritableDatabase();
 		String strFilter = ACT_KEY_ID + "=" + id;
 		ContentValues args = new ContentValues();
@@ -170,7 +170,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Lap> getLaps(int id){
     	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
-        String selectQuery = "SELECT * FROM " + TABLE_LAP + " WHERE LAP_KEY_ACT=" + id; 
+        String selectQuery = "SELECT * FROM " + TABLE_LAP + " WHERE " + LAP_KEY_ACT + "=" + id; 
       
         // getredable db
         SQLiteDatabase db = this.getReadableDatabase();
@@ -182,7 +182,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             	output.add(
             		new Lap(	
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_ID)),
-            			cursor.getInt(cursor.getColumnIndex(LAP_KEY_TIME)),
+            			cursor.getLong(cursor.getColumnIndex(LAP_KEY_TIME)),
             			cursor.getInt(cursor.getColumnIndex(LAP_KEY_DIST)),
             			cursor.getDouble(cursor.getColumnIndex(LAP_KEY_LAT)),
             			cursor.getDouble(cursor.getColumnIndex(LAP_KEY_LON)),
@@ -215,8 +215,8 @@ public ArrayList<Act> getActivities(){
         	output.add(
         		new Act(	
         			cursor.getInt(cursor.getColumnIndex(ACT_KEY_ID)),
-        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_TIME)),
-        			cursor.getInt(cursor.getColumnIndex(ACT_KEY_START)),
+        			cursor.getLong(cursor.getColumnIndex(ACT_KEY_TIME)),
+        			cursor.getLong(cursor.getColumnIndex(ACT_KEY_START)),
         			cursor.getInt(cursor.getColumnIndex(ACT_KEY_DIST))
         		)
         	);
@@ -234,7 +234,7 @@ public ArrayList<Act> getActivities(){
 public ArrayList<Logg> getLog(int id){
 	ArrayList<Logg> output = new ArrayList<Logg>(); // the return array
     
-    String selectQuery = "SELECT * FROM " + TABLE_LOG + " WHERE LOG_KEY_ACT=" + id;
+    String selectQuery = "SELECT * FROM " + TABLE_LOG + " WHERE " + LOG_KEY_ACT + "=" + id;
     
     // getredable db
     SQLiteDatabase db = this.getReadableDatabase();
@@ -248,7 +248,7 @@ public ArrayList<Logg> getLog(int id){
         			(cursor.getInt(cursor.getColumnIndex(LOG_KEY_ID))),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LAT)),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_LON)),
-        			cursor.getInt(cursor.getColumnIndex(LOG_KEY_TIME)),
+        			cursor.getLong(cursor.getColumnIndex(LOG_KEY_TIME)),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_ALT)),
         			cursor.getDouble(cursor.getColumnIndex(LOG_KEY_SPEED)),
         			cursor.getInt(cursor.getColumnIndex(LOG_KEY_ACT))
