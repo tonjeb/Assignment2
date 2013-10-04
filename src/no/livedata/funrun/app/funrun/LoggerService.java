@@ -95,7 +95,7 @@ public class LoggerService extends Service implements LocationListener {
         haveNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         
     	// if we have gps enabled, get location from it
-        if (haveGPS) {
+        if (haveGPS) { // TODO: Bare bruke GPS?
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MIN_TIME,
@@ -163,7 +163,33 @@ public class LoggerService extends Service implements LocationListener {
 
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// TODO Auto-generated method stub
+		// check if new service is enabled or service disabled
+		if(locationManager != null){
+            locationManager.removeUpdates(LoggerService.this);
+        }
+		
+		locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+   	 
+        // check if GPS is available
+        haveGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        // checking network status
+        haveNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        
+    	// if we have gps enabled, get location from it
+        if (haveGPS) {
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    MIN_TIME,
+                    MIN_DISTANCE, this);
+        }else if (haveNetwork) { // else try network to get location
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    MIN_TIME,
+                    MIN_DISTANCE, this);
+        }else {
+        	//showSettingsAlert();
+        }
 		
 	}
 

@@ -173,6 +173,7 @@ public class Main extends Activity {
 	@Override
 	protected void onStop() {
 		unregisterReceiver(logReceiver);
+		stopService(serviceIntent);
 		closeActivity();
 		super.onStop();
 	}
@@ -220,23 +221,24 @@ public class Main extends Activity {
 		 @Override
 		 public void onReceive(Context con, Intent in) {
 
-		  long dist = in.getLongExtra("DIST", -1);
-		  double speed = in.getDoubleExtra("SPEED", -1);
-		  lat = in.getDoubleExtra("LAT", 0.0);
-		  lon = in.getDoubleExtra("LON", 0.0);
-		  
-		  if (dist != -1) {
-			  Toast.makeText(Main.this,
-			    "Triggered by Service!\n"
-			    + "Data passed: " + String.valueOf(dist),
-			    Toast.LENGTH_LONG).show();
-			  distance = (int) dist;
-			  distView.setText((double)dist/1000+"");
-		  }
-		  
-		  if (speed != -1) {
-			  //DistView.setText((double)dist/1000+"");
-		  }
+			  long dist = in.getLongExtra("DIST", -1);
+			  double speed = in.getDoubleExtra("SPEED", -1);
+			  lat = in.getDoubleExtra("LAT", 0.0);
+			  lon = in.getDoubleExtra("LON", 0.0);
+			  
+			  if (dist != -1) {
+				  Toast.makeText(Main.this,
+				    "Triggered by Service!\n"
+				    + "Data passed: " + String.valueOf(dist),
+				    Toast.LENGTH_LONG).show();
+				  distance = (int) dist;
+				  distView.setText((double)dist/1000+"");
+			  }
+			  
+			  if (speed != -1) {
+				  //DistView.setText((double)dist/1000+"");
+				  // TODO: Display current speed
+			  }
 		  
 		 }
 		 
