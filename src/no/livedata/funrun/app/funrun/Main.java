@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,7 +66,13 @@ public class Main extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		
+		// get screen orientation
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			setContentView(R.layout.main); // use standard layout if orientation is portrait
+	    } else {
+	    	setContentView(R.layout.main_l); // use landscape layout if orientation is landscape (not portrait)
+	    }
 		
 		logReceiver = new LoggerReceiver();
 	    IntentFilter intentFilter = new IntentFilter();

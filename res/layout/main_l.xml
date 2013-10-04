@@ -1,0 +1,122 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/include1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/navmenu" />
+
+    <Button
+        android:id="@+id/StartButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/include1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
+        android:text="@string/start" />
+
+    <Button
+        android:id="@+id/LapButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/include1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:text="Reset" />
+
+    <TextView
+        android:id="@+id/TimeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/StartButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:text="00:00"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TimeView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:text="@string/time" />
+
+    <TextView
+        android:id="@+id/LapView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TimeView"
+        android:layout_alignBottom="@+id/TimeView"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/TimeView"
+        android:text="00:00"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/DistView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/LapView"
+        android:layout_alignBottom="@+id/LapView"
+        android:layout_alignLeft="@+id/textView3"
+        android:text="0.0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/DistView"
+        android:layout_alignBottom="@+id/DistView"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="km"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/speedView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignLeft="@+id/textView6"
+        android:text="0.0"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TimeView"
+        android:layout_alignLeft="@+id/LapView"
+        android:text="@string/laptime" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TimeView"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/LapView"
+        android:text="@string/distance" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TimeView"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/textView5"
+        android:text="@string/speed" />
+
+</RelativeLayout>
