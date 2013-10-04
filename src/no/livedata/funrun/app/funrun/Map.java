@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +33,7 @@ public class Map extends FragmentActivity implements LocationListener {
 	private GoogleMap mMap; // to save map
 	private LocationManager locationManager; // to save location
 	private static final long MIN_TIME = 5000; // min time between positionupdate (milliseconds)
-	private static final float MIN_DISTANCE = 10; // min distance between positionupdate (meters)
-	
+	private static final float MIN_DISTANCE = 0.1f; // min distance between positionupdate (meters)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +73,10 @@ public class Map extends FragmentActivity implements LocationListener {
         // start updating position again
         // requestLocationUpdates(networkprovider, mintime(milliseconds), mindistance(meter), listener)
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	Log.d("GPS","on");
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }else{
+        	Log.d("GPS","off");
         	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }
     }
@@ -92,13 +94,7 @@ public class Map extends FragmentActivity implements LocationListener {
     
     @Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-    	locationManager.removeUpdates(this); // stop updating position
-    	// update location service on service update
-    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
-        }else{
-        	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
-        }
+    	
 	}
     
     
@@ -126,22 +122,39 @@ public class Map extends FragmentActivity implements LocationListener {
         mMap.setMyLocationEnabled(true); // set map to show users position
     }
 
+    /*
+     * when new position is available
+     * (non-Javadoc)
+     * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+     */
 	@Override
 	public void onLocationChanged(Location location) {
 		LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude()); // update latLng
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15); // create new position
         mMap.animateCamera(cameraUpdate); // goto new position
+        Log.d("GPS", "new pos");
 	}
 
 	@Override
 	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
+		locationManager.removeUpdates(this); // stop updating position
+    	// update location service on service update
+    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+        }else{
+        	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+        }
 		
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
+		locationManager.removeUpdates(this); // stop updating position
+    	// update location service on service update
+    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+        }else{
+        	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+        }
 	}
 }

@@ -162,7 +162,9 @@ public class Main extends Activity {
 	    {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
-	            finish();    
+	        	onDestroy();
+	            finish();  
+	            System.exit(0);
 	        }
 
 	    })
@@ -171,11 +173,11 @@ public class Main extends Activity {
 	}
 	
 	@Override
-	protected void onStop() {
+	protected void onDestroy() {
 		unregisterReceiver(logReceiver);
 		stopService(serviceIntent);
 		closeActivity();
-		super.onStop();
+		super.onDestroy();
 	}
 	
 	private void newActivity() {

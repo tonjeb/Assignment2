@@ -25,10 +25,10 @@ public class LoggerService extends Service implements LocationListener {
     boolean haveNetwork = false;
     
     // Minimum position change for update
-    private static float MIN_DISTANCE = 0.1f; // 0.1 meters, to update each time
+    private static float MIN_DISTANCE = 0; // 0.1 meters, to update each time
  
     // Minimum time between updates
-    private static long MIN_TIME = 1000 * 5; // 5 seconds, to get update every 5 seconds
+    private static long MIN_TIME = 0; // 5 seconds, to get update every 5 seconds
  
     // Location Manager to controll location
     protected LocationManager locationManager;
@@ -46,7 +46,9 @@ public class LoggerService extends Service implements LocationListener {
     final static String UPDATE_UI = "UPDATE_UI";
     
     // the id of the current activity
-	int activity;
+	int activity = 0;
+	
+	long lastTime = 0;
 	
 	public LoggerService() {
 	}
@@ -55,19 +57,22 @@ public class LoggerService extends Service implements LocationListener {
     public void onCreate() {
         Toast.makeText(this, getResources().getString(R.string.service), Toast.LENGTH_LONG).show();
     }
-
+    
     @Override
-    public void onStart(Intent intent, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
     	context = this;
         Toast.makeText(this, getResources().getString(R.string.service_started), Toast.LENGTH_LONG).show();
-        Bundle extras = intent.getExtras(); 
-		if(extras != null) {
-		    activity = (int) Integer.parseInt(extras.get("ACT").toString());
-		    Log.d("GPS","Logger started");
-		    Toast.makeText(this, getResources().getString(R.string.act) + activity, Toast.LENGTH_LONG).show();
-		    startLocationListener();
-		}
-
+        if (intent.getExtras() != null) {
+	        Bundle extras = intent.getExtras(); 
+			if(extras != null) {
+			    activity = (int) Integer.parseInt(extras.get("ACT").toString());
+			    Log.d("GPS","Logger started");
+			    Toast.makeText(this, getResources().getString(R.string.act) + activity, Toast.LENGTH_LONG).show(); 
+			}
+        }
+		startLocationListener();
+		
+        return START_STICKY; // run until stopped
     }
     
 
@@ -86,6 +91,10 @@ public class LoggerService extends Service implements LocationListener {
 	}
     
     private void startLocationListener() {
+    	if(locationManager != null){
+            locationManager.removeUpdates(LoggerService.this);
+        }
+    	
     	locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
     	 
         // check if GPS is available
@@ -96,11 +105,13 @@ public class LoggerService extends Service implements LocationListener {
         
     	// if we have gps enabled, get location from it
         if (haveGPS) { // TODO: Bare bruke GPS?
+        	Log.d("GPS","on");
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MIN_TIME,
                     MIN_DISTANCE, this);
         }else if (haveNetwork) { // else try network to get location
+        	Log.d("GPS","off");
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     MIN_TIME,
@@ -126,71 +137,46 @@ public class LoggerService extends Service implements LocationListener {
 	    
 	    Log.d("GPS","Distance: " + (double)distance/1000);
 	    
-	    // connect to db
- 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
- 		db.insertLogg(new Logg (
- 							0,
- 							location.getLatitude(),
- 							location.getLongitude(),
- 							(int)System.currentTimeMillis(),
- 							location.getAltitude(),
- 							location.getSpeed(),
- 							activity
- 						));
- 		db.close();
-	    
-	    // notify ui about change
-	    Intent intent = new Intent();
-	    intent.setAction(UPDATE_UI);
-	    intent.putExtra("DIST", distance);
-	    intent.putExtra("SPEED", location.getSpeed());
-	    intent.putExtra("LAT", location.getLatitude());
-	    intent.putExtra("LON", location.getLongitude());
-	    sendBroadcast(intent);
+	    if (activity != 0 && (lastTime + 5000) < System.currentTimeMillis()) {
+	    	Log.d("GPS","logged: "+lastTime+", "+System.currentTimeMillis());
+		    // connect to db
+	 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+	 		db.insertLogg(new Logg (
+	 							0,
+	 							location.getLatitude(),
+	 							location.getLongitude(),
+	 							(int)System.currentTimeMillis(),
+	 							location.getAltitude(),
+	 							location.getSpeed(),
+	 							activity
+	 						));
+	 		db.close();
+		    
+		    // notify ui about change
+		    Intent intent = new Intent();
+		    intent.setAction(UPDATE_UI);
+		    intent.putExtra("DIST", distance);
+		    intent.putExtra("SPEED", location.getSpeed());
+		    intent.putExtra("LAT", location.getLatitude());
+		    intent.putExtra("LON", location.getLongitude());
+		    sendBroadcast(intent);
+		    lastTime = (long) System.currentTimeMillis();
+		    Log.d("GPS",lastTime+"");
+	    }
 	}
 
 	@Override
 	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
-		
+		startLocationListener(); // update location
 	}
 
 	@Override
 	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-		
+		startLocationListener(); // update location
 	}
 
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// check if new service is enabled or service disabled
-		if(locationManager != null){
-            locationManager.removeUpdates(LoggerService.this);
-        }
-		
-		locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-   	 
-        // check if GPS is available
-        haveGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        // checking network status
-        haveNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        
-    	// if we have gps enabled, get location from it
-        if (haveGPS) {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    MIN_TIME,
-                    MIN_DISTANCE, this);
-        }else if (haveNetwork) { // else try network to get location
-            locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER,
-                    MIN_TIME,
-                    MIN_DISTANCE, this);
-        }else {
-        	//showSettingsAlert();
-        }
 		
 	}
-
 }
