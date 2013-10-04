@@ -24,12 +24,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     
-    <string name="service">The new Service was Created.</string>
-    <string name="service_started"> Service Started.</string>
-    <string name="act"> Activity: </string>
-    <string name="service_destroyed">Service Destroyed.</string>
-    <string name="not_impl">Not yet implemented.</string>
-    
     <!-- Menu -->
     <string name="nav_map">Map</string>
     <string name="nav_lap">Laps</string>

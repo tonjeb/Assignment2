@@ -2,21 +2,34 @@
 <resources>
 
     <string name="app_name">FunRun</string>
-    <string name="action_settings">Innstillinger</string>
+    <string name="action_settings">Instillinger</string>
+    
+    <!-- common -->
+    <string name="back">Tilbake</string>
+    
+    <!-- main layout -->
+    <string name="time">Tid</string>
+    <string name="laptime">Lap tid</string>
+    <string name="distance">Distanse</string>
+    <string name="speed">Fart</string>
+    
     <string name="start">Start</string>
     <string name="lap">Lap</string>
-    <string name="stop">Stopp</string>
+    <string name="stop">Stop</string>
     <string name="reset">Reset</string>
-    <string name="quit">Avslutte?</string>
-    <string name="sure">Ved å gå ut av appen avsluttes aktiviteten. Vil du virkelig gå ut?</string>
+    
+    <!--  exit menu -->
+    <string name="quit">Avslutt?</string>
+    <string name="sure">Er du sikker på at du vil avslutte? Aktiviteten stanses</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
     
-    <string name="service">Den nye servicen ble opprettet.</string>
-    <string name="service_started"> Service er startet.</string>
-    <string name="act"> Aktivitet: </string>
-    <string name="service_destroyed">Service avsluttet.</string>
-    <string name="not_impl">Ikke implementert enda.</string>
+    <!-- Menu -->
+    <string name="nav_map">Kart</string>
+    <string name="nav_lap">Lap</string>
+    <string name="nav_hist">Historie</string>
+    
+    
     
 
 </resources>
