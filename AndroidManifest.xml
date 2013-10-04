@@ -34,7 +34,7 @@
             android:value="AIzaSyBYUzliKt4SxyempYLenLT3_KC2YZu1938" />
         <activity
             android:name="no.livedata.funrun.app.funrun.Main"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

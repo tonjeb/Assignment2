@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -67,12 +68,8 @@ public class Main extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// get screen orientation
-		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			setContentView(R.layout.main); // use standard layout if orientation is portrait
-	    } else {
-	    	setContentView(R.layout.main_l); // use landscape layout if orientation is landscape (not portrait)
-	    }
+		setContentView(R.layout.main); // use standard layout if orientation is portrait
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // use only portrait
 		
 		logReceiver = new LoggerReceiver();
 	    IntentFilter intentFilter = new IntentFilter();
@@ -160,12 +157,6 @@ public class Main extends Activity {
 		
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-		
-	};
 	
 	@Override
 	public void onBackPressed() {

@@ -21,13 +21,13 @@ public class ShowActivity extends Activity {
 		setContentView(R.layout.main);
 		Bundle recdData = getIntent().getExtras();
         id = recdData.getInt("id");
-		activityView = (ListView)findViewById(R.id.activityList);
+		/*activityView = (ListView)findViewById(R.id.activityList);
 		// connect to db
  		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
  		activityList = db.getActivities();
  		db.close();
  		adapter=new ActivityAdapter(); 
- 		activityView.setAdapter(adapter);
+ 		activityView.setAdapter(adapter);*/
 	}
 
 
