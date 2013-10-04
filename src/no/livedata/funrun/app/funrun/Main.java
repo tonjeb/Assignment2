@@ -71,6 +71,7 @@ public class Main extends Activity {
 		setContentView(R.layout.main); // use standard layout if orientation is portrait
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // use only portrait
 		
+		// reccive positions
 		logReceiver = new LoggerReceiver();
 	    IntentFilter intentFilter = new IntentFilter();
 	    intentFilter.addAction(LoggerService.UPDATE_UI);
@@ -185,7 +186,7 @@ public class Main extends Activity {
 	        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener()
 	    {
 	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
+	        public void onClick(DialogInterface dialog, int which) { // exit activity and app
 	        	onDestroy();
 	            finish();  
 	            System.exit(0);
@@ -197,7 +198,7 @@ public class Main extends Activity {
 	}
 	
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() { // clean up
 		unregisterReceiver(logReceiver);
 		stopService(serviceIntent);
 		closeActivity();
@@ -244,6 +245,7 @@ public class Main extends Activity {
  		lapView.setText(timeToString(time));
 	}
 	
+	// recceive loggs
 	private class LoggerReceiver extends BroadcastReceiver{
 		 
 		 @Override
@@ -292,6 +294,7 @@ public class Main extends Activity {
     	speedView.setText("0.0");
     }
     
+    // timer to calculate and set times
     private Runnable startTimer = new Runnable() {
  	   public void run() {
  		   elapsedTime = System.currentTimeMillis() - startTime;

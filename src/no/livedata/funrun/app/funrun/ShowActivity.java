@@ -14,11 +14,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-
+/*
+ * show activities
+ */
 public class ShowActivity extends Activity {
-	ListView activityView;
-	ActivityAdapter adapter;
-	ArrayList<Act> activityList = new ArrayList<Act>();
+	ListView activityView; // activity list
+	ActivityAdapter adapter; // activity adapter
+	ArrayList<Act> activityList = new ArrayList<Act>(); // activitylist
 	
 	Button backButton;
 
@@ -31,6 +33,7 @@ public class ShowActivity extends Activity {
 		
 		backButton = (Button) findViewById(R.id.backButton);
         
+		// exit activity
         backButton.setOnClickListener( new View.OnClickListener() {
 			public void onClick (View v) {
 				finish();
@@ -39,9 +42,12 @@ public class ShowActivity extends Activity {
         
 		// connect to db
  		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
- 		activityList = db.getActivities();
+ 		activityList = db.getActivities(); // get activities
  		db.close();
+ 		
+ 		// add activities to adapter
  		adapter = new ActivityAdapter(this, activityList); 
+ 		// add adapter to list
  		activityView.setAdapter(adapter);
  		
  		// Click event for single list row
@@ -49,10 +55,9 @@ public class ShowActivity extends Activity {
 
 			//@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//Log.d("LIST",stList.get(position).get("rid"));
 				Intent lapInt = new Intent(getApplicationContext(), ShowLaps.class);
 				lapInt.putExtra("act",activityList.get(position).getId());
-				//startActivityForResult(displayInt);
+
 				startActivity(lapInt);		
 			}
 		});

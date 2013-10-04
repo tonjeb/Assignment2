@@ -96,14 +96,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
+	/**
+	 * insert lap to db
+	 * @param newLap a Lap object to insert
+	 */
 	public void insertLap(Lap newLap) {
+		// get parameters
 		long time = newLap.getTime();
 		double dist = newLap.getDist();
 		double lat = newLap.getLat();
 		double lon = newLap.getLon();
 		int act = newLap.getAct();
 		
+		// get db
 		SQLiteDatabase db = this.getWritableDatabase();
+		// add values
 		ContentValues insert = new ContentValues(); 
 		insert.put(LAP_KEY_TIME, time);
 		insert.put(LAP_KEY_DIST, dist);
@@ -117,12 +124,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}	
 	
+	/**
+	 * insert activity
+	 * @param newActivity act object to insert
+	 * @returnactivity id
+	 */
 	public int insertActivity(Act newActivity) {
+		// get params
 		long time = newActivity.getTime();
 		long start = newActivity.getStart();
 		double dist = newActivity.getDist();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
+		// add params
 		ContentValues insert = new ContentValues(); 
 		insert.put(ACT_KEY_TIME, time);
 		insert.put(ACT_KEY_START, start);
@@ -135,7 +149,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return insId;
 	}	
 	
+	/**
+	 * insert logg
+	 * @param newLogg Logg objecty to insert
+	 */
 	public void insertLogg(Logg newLogg) {
+		// get params
 		double lat = newLogg.getLat();
 		double lon = newLogg.getLon();
 		long time = newLogg.getTime();
@@ -144,6 +163,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		int act = newLogg.getAct();
 		
 		SQLiteDatabase db = this.getWritableDatabase();
+		// add values
 		ContentValues insert = new ContentValues(); 
 		insert.put(LOG_KEY_LAT, lat);
 		insert.put(LOG_KEY_LON, lon);
@@ -157,16 +177,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();	
 	}	
 	
+	/**
+	 * Update activity
+	 * @param id the id of the activity to update
+	 * @param time the time to set
+	 * @param dist the distance to set
+	 */
 	public void updateActivity(int id, long time, int dist) {	
 		SQLiteDatabase db = this.getWritableDatabase();
 		String strFilter = ACT_KEY_ID + "=" + id;
+		
+		// add vaalues
 		ContentValues args = new ContentValues();
 		args.put(ACT_KEY_TIME, time);
 		args.put(ACT_KEY_DIST, dist);
+		
+		// update db
 		db.update(TABLE_ACT, args, strFilter, null);
 		db.close();
 	}
 	
+	/**
+	 * get all laps for activity
+	 * @param id of activity
+	 * @return ArrayList of laps
+	 */
     public ArrayList<Lap> getLaps(int id){
     	ArrayList<Lap> output = new ArrayList<Lap>(); // the return array
         
@@ -199,7 +234,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return output; // return the array of all data
     }
 
-
+/**
+ * get all activities
+ * @return ArrayList of activities
+ */
 public ArrayList<Act> getActivities(){
 	ArrayList<Act> output = new ArrayList<Act>(); // the return array
     
@@ -231,6 +269,11 @@ public ArrayList<Act> getActivities(){
 }
 
 
+/**
+ * get all log entries for activity
+ * @param id of activity
+ * @return ArrayList of Log objects
+ */
 public ArrayList<Logg> getLog(int id){
 	ArrayList<Logg> output = new ArrayList<Logg>(); // the return array
     

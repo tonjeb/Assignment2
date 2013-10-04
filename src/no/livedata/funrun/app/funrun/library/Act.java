@@ -1,5 +1,8 @@
 package no.livedata.funrun.app.funrun.library;
 
+/*
+ * class to store activity
+ */
 public class Act {
 	
 	int id;
@@ -14,6 +17,13 @@ public class Act {
 		dist = 0;
 	}
 	
+	/**
+	 * constructor
+	 * @param id the id of the activity
+	 * @param start the starttime
+	 * @param time the spent time
+	 * @param dist the distance
+	 */
 	public Act(int id, long start, long time, int dist) {
 		this.id = id;
 		this.start = start;

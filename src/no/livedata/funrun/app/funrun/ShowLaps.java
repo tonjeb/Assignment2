@@ -11,11 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+/*
+ * Show all laps for activity
+ */
 public class ShowLaps extends Activity {
-	ListView lapView;
-	LapAdapter adapter;
-	ArrayList<Lap> lapList = new ArrayList<Lap>();
-	int actId;
+	ListView lapView; // the list
+	LapAdapter adapter; // lap adapter
+	ArrayList<Lap> lapList = new ArrayList<Lap>(); // list of lap objects to display
+	int actId; // activity id
 	
 	Button backButton;
 
@@ -26,20 +29,25 @@ public class ShowLaps extends Activity {
 		lapView = (ListView)findViewById(R.id.lapList);
 		backButton = (Button) findViewById(R.id.backButton);
         
+		// exit activity
         backButton.setOnClickListener( new View.OnClickListener() {
 			public void onClick (View v) {
 				finish();
 			}
 		});
         
+        // get activity id
 		Bundle recdData = getIntent().getExtras();
         actId = recdData.getInt("act");
 		
 		// connect to db
  		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
- 		lapList = db.getLaps(actId);
+ 		lapList = db.getLaps(actId); // get laps
  		db.close();
- 		adapter = new LapAdapter(this, lapList); 
+ 		
+ 		// insert laps into adapter
+ 		adapter = new LapAdapter(this, lapList);
+ 		// set adapter for list
  		lapView.setAdapter(adapter);
 	}
 }

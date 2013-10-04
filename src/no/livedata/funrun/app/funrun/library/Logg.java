@@ -1,5 +1,9 @@
 package no.livedata.funrun.app.funrun.library;
 
+/**
+ * Class to hold logging information
+ *
+ */
 public class Logg {
 	
 	int id;
@@ -20,6 +24,16 @@ public class Logg {
 		act = 0;
 	}
 	
+	/**
+	 * Constructor
+	 * @param id the id of loggentry
+	 * @param lat the latitude of logg
+	 * @param lon the longitude of logg
+	 * @param time the time of logg
+	 * @param alt the altitude of logg
+	 * @param speed the speed of logg
+	 * @param act the parent activity
+	 */
 	public Logg(int id, double lat, double lon, long time, double alt, double speed, int act) {
 		this.id = id;
 		this.lat = lat;

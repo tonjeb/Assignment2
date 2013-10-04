@@ -1,5 +1,8 @@
 package no.livedata.funrun.app.funrun.library;
 
+/*
+ * Class to manage laps
+ */
 public class Lap {
 	
 	int id;
@@ -20,6 +23,15 @@ public class Lap {
 		
 	}
 	
+	/**
+	 * Constructor
+	 * @param id the id of the lap
+	 * @param time the time of the lap
+	 * @param dist the distance of the lap
+	 * @param lat the latitude for lap
+	 * @param lon the longitude for lap
+	 * @param act the parent activity
+	 */
 	public Lap(int id, long time, int dist, double lat, double lon, int act) {
 		this.id = id;
 		this.time = time;

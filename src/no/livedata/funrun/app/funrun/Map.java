@@ -34,7 +34,7 @@ import android.widget.Button;
 import android.widget.EditText;
 /*
  * ShowLocation
- * Activity for showing users location on map, and send it by email
+ * Activity for showing users location on map
  * Uses fragments to embed map
  */
 public class Map extends FragmentActivity implements LocationListener {
@@ -57,13 +57,13 @@ public class Map extends FragmentActivity implements LocationListener {
         
         // get data passed from ShowLocation
      	Bundle recdData = getIntent().getExtras();
-        activity = recdData.getInt("act"); // set latitude
+        activity = recdData.getInt("act"); // set activity id
         
         backButton = (Button) findViewById(R.id.backButton);
         
         backButton.setOnClickListener( new View.OnClickListener() {
 			public void onClick (View v) {
-				finish();
+				finish(); // end activity (go to last)
 			}
 		});
         
@@ -73,7 +73,7 @@ public class Map extends FragmentActivity implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         if (activity != -1){
-        	addPoints();
+        	//addPoints();
         }
         
     }
@@ -103,11 +103,9 @@ public class Map extends FragmentActivity implements LocationListener {
         locationManager.removeUpdates(this); // stop updating position
         // start updating position again
         // requestLocationUpdates(networkprovider, mintime(milliseconds), mindistance(meter), listener)
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-        	Log.d("GPS","on");
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) { // using the best provider posible
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }else{
-        	Log.d("GPS","off");
         	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }
     }
@@ -129,16 +127,21 @@ public class Map extends FragmentActivity implements LocationListener {
 	}
     
     private void addPoints() {
+    	// loads points from db
     	DatabaseHandler db = new DatabaseHandler(getApplicationContext());
  		logList = db.getLog(activity);
  		db.close();
+ 		
+ 		// adds all points
  		for (Logg logg : logList) {
  			routePoints.add(new LatLng(logg.getLat(),logg.getLon()));
  		}
+ 		// creates polyline
     	Polyline route = mMap.addPolyline(new PolylineOptions()
     	  .width(5)
     	  .color(Color.RED)
     	  .geodesic(true));
+    	// add points to map
     	route.setPoints(routePoints);
     }
     
@@ -184,7 +187,7 @@ public class Map extends FragmentActivity implements LocationListener {
 	public void onProviderDisabled(String arg0) {
 		locationManager.removeUpdates(this); // stop updating position
     	// update location service on service update
-    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {// using the best provider posible
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }else{
         	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
@@ -196,7 +199,7 @@ public class Map extends FragmentActivity implements LocationListener {
 	public void onProviderEnabled(String provider) {
 		locationManager.removeUpdates(this); // stop updating position
     	// update location service on service update
-    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+    	if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {// using the best provider posible
         	locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }else{
         	locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);

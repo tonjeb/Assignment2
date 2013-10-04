@@ -55,19 +55,17 @@ public class LoggerService extends Service implements LocationListener {
 	
 	@Override
     public void onCreate() {
-        Toast.makeText(this, getResources().getString(R.string.service), Toast.LENGTH_LONG).show();
+        
     }
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
     	context = this;
-        Toast.makeText(this, getResources().getString(R.string.service_started), Toast.LENGTH_LONG).show();
         if (intent.getExtras() != null) {
 	        Bundle extras = intent.getExtras(); 
 			if(extras != null) {
 			    activity = (int) Integer.parseInt(extras.get("ACT").toString());
 			    Log.d("GPS","Logger started");
-			    Toast.makeText(this, getResources().getString(R.string.act) + activity, Toast.LENGTH_LONG).show(); 
 			}
         }
 		startLocationListener();
@@ -78,7 +76,6 @@ public class LoggerService extends Service implements LocationListener {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, getResources().getString(R.string.service_destroyed), Toast.LENGTH_LONG).show();
         if(locationManager != null){
             locationManager.removeUpdates(LoggerService.this);
         }
@@ -87,7 +84,7 @@ public class LoggerService extends Service implements LocationListener {
     @Override
 	public IBinder onBind(Intent intent) {
 		// TODO: Return the communication channel to the service.
-		throw new UnsupportedOperationException(getResources().getString(R.string.not_impl));
+		throw new UnsupportedOperationException("");
 	}
     
     private void startLocationListener() {
@@ -123,10 +120,10 @@ public class LoggerService extends Service implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		Log.d("GPS","Location logged: "+location.getLatitude() + " " + location.getLongitude());
 		location.getAltitude();
 		location.getSpeed();
 		
+		// calculate distance
 		if(lastLat != 0 && lastLon != 0) { 
 	       Location.distanceBetween(lastLat,lastLon,location.getLatitude(),location.getLongitude(),dist);
 	       distance+=(long)dist[0];
@@ -135,10 +132,10 @@ public class LoggerService extends Service implements LocationListener {
 	    lastLat=location.getLatitude();
 	    lastLon=location.getLongitude();
 	    
-	    Log.d("GPS","Distance: " + (double)distance/1000);
 	    
+	    // send broadcast
 	    if (activity != 0 && (lastTime + 5000) < System.currentTimeMillis()) {
-	    	Log.d("GPS","logged: "+lastTime+", "+System.currentTimeMillis());
+	    	
 		    // connect to db
 	 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 	 		db.insertLogg(new Logg (
@@ -161,7 +158,6 @@ public class LoggerService extends Service implements LocationListener {
 		    intent.putExtra("LON", location.getLongitude());
 		    sendBroadcast(intent);
 		    lastTime = (long) System.currentTimeMillis();
-		    Log.d("GPS",lastTime+"");
 	    }
 	}
 
