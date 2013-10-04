@@ -1,12 +1,20 @@
 package no.livedata.funrun.app.funrun;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import no.livedata.funrun.app.funrun.library.DatabaseHandler;
+import no.livedata.funrun.app.funrun.library.Lap;
+import no.livedata.funrun.app.funrun.library.Logg;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,6 +23,7 @@ import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -36,11 +45,19 @@ public class Map extends FragmentActivity implements LocationListener {
 	private static final float MIN_DISTANCE = 0.1f; // min distance between positionupdate (meters)
 	
 	Button backButton;
+	
+	int activity;
+	List<LatLng> routePoints;
+	ArrayList<Logg> logList = new ArrayList<Logg>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+        
+        // get data passed from ShowLocation
+     	Bundle recdData = getIntent().getExtras();
+        activity = recdData.getInt("act"); // set latitude
         
         backButton = (Button) findViewById(R.id.backButton);
         
@@ -54,6 +71,10 @@ public class Map extends FragmentActivity implements LocationListener {
         
         // initialize locationmanager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        
+        if (activity != -1){
+        	addPoints();
+        }
         
     }
     
@@ -106,6 +127,20 @@ public class Map extends FragmentActivity implements LocationListener {
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
     	
 	}
+    
+    private void addPoints() {
+    	DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+ 		logList = db.getLog(activity);
+ 		db.close();
+ 		for (Logg logg : logList) {
+ 			routePoints.add(new LatLng(logg.getLat(),logg.getLon()));
+ 		}
+    	Polyline route = mMap.addPolyline(new PolylineOptions()
+    	  .width(5)
+    	  .color(Color.RED)
+    	  .geodesic(true));
+    	route.setPoints(routePoints);
+    }
     
     
     /*

@@ -97,6 +97,7 @@ public class Main extends Activity {
 			public void onClick (View v) {
 				Intent mapInt = new Intent(getApplicationContext(), Map.class); 
 	        	mapInt.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        	mapInt.putExtra("act",activity);
 	        	startActivity(mapInt); // start the activity
 			}
 		});
